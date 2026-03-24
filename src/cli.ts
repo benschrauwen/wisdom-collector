@@ -99,6 +99,11 @@ async function main(): Promise<void> {
   });
 
   console.log(`Wrote skill "${result.blueprint.skillTitle}" to ${result.outputDirectory}`);
+  if (result.subskills.length > 0) {
+    console.log(
+      `Wrote ${result.subskills.length} subskill(s): ${result.subskills.map((subskill) => subskill.blueprint.slug).join(", ")}`,
+    );
+  }
   console.log(`Processed ${result.chunkCount} chunk(s).`);
 }
 

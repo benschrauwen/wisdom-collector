@@ -2,96 +2,60 @@ import { Type, type Static, type ThinkingLevel } from "@mariozechner/pi-ai";
 
 import { runStructuredToolAgent } from "./run-structured-tool-agent.js";
 import { buildSkillSynthesisSystemPrompt, buildSkillSynthesisUserPrompt } from "../prompts/skill-synthesis.js";
-import type { AnyModel, BookMetadata, ChunkAnalysis, SkillBlueprint } from "../types.js";
+import type { AnyModel, BookMetadata, ChunkAnalysis, SkillBlueprint, SkillFileBlueprint } from "../types.js";
 import { slugify } from "../utils/slugify.js";
+
+const skillFileSchema = Type.Object({
+  slug: Type.String({ minLength: 1 }),
+  skillTitle: Type.String({ minLength: 1 }),
+  description: Type.String({ minLength: 1 }),
+  skillBody: Type.String({ minLength: 1 }),
+});
 
 const skillBlueprintSchema = Type.Object({
   slug: Type.String({ minLength: 1 }),
   skillTitle: Type.String({ minLength: 1 }),
   description: Type.String({ minLength: 1 }),
-  summary: Type.String({ minLength: 1 }),
-  whenToUse: Type.Array(Type.String({ minLength: 1 })),
-  requiredInputs: Type.Array(Type.String({ minLength: 1 })),
-  workflow: Type.Array(Type.String({ minLength: 1 })),
-  heuristics: Type.Array(Type.String({ minLength: 1 })),
-  antiPatterns: Type.Array(Type.String({ minLength: 1 })),
-  starterPrompts: Type.Array(Type.String({ minLength: 1 })),
-  sourceNotes: Type.Array(Type.String({ minLength: 1 })),
+  skillBody: Type.String({ minLength: 1 }),
+  subskills: Type.Array(skillFileSchema),
 });
 
 type SkillBlueprintPayload = Static<typeof skillBlueprintSchema>;
+type SkillFilePayload = Static<typeof skillFileSchema>;
 
 function cleanText(value: string): string {
   return value.replace(/\s+/g, " ").trim();
 }
 
-function stripLeadingListMarker(value: string): string {
-  return value.replace(/^(?:[-*]\s+|\d+[.)]\s+)/, "");
+function stripMarkdownCodeFence(markdown: string): string {
+  const trimmed = markdown.trim();
+  const fencedMatch = trimmed.match(/^```(?:markdown|md)?\s*\n?([\s\S]*?)\n?```$/i);
+  return fencedMatch ? fencedMatch[1].trim() : trimmed;
 }
 
-function canonicalizeForDedup(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/->|→/g, " ")
-    .replace(/["'`]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+function stripFrontmatter(markdown: string): string {
+  const trimmed = stripMarkdownCodeFence(markdown);
+  const frontmatterMatch = trimmed.match(/^---\s*\n[\s\S]*?\n---\s*/);
+  return frontmatterMatch ? trimmed.slice(frontmatterMatch[0].length).trim() : trimmed;
 }
 
-function hasHighTokenOverlap(left: string, right: string): boolean {
-  if (!left || !right) {
-    return false;
+function ensureTopLevelHeading(skillTitle: string, skillBody: string): string {
+  const trimmed = skillBody.trim();
+
+  if (!trimmed) {
+    return `# ${skillTitle}`;
   }
 
-  const leftTokens = new Set(left.split(" ").filter(Boolean));
-  const rightTokens = new Set(right.split(" ").filter(Boolean));
-  const minTokenCount = Math.min(leftTokens.size, rightTokens.size);
-
-  if (minTokenCount < 8) {
-    return false;
+  if (/^#\s+/.test(trimmed)) {
+    return trimmed;
   }
 
-  let overlap = 0;
-  for (const token of leftTokens) {
-    if (rightTokens.has(token)) {
-      overlap += 1;
-    }
-  }
-
-  return overlap / minTokenCount >= 0.9;
+  return `# ${skillTitle}\n\n${trimmed}`;
 }
 
-function dedupeList(values: string[]): string[] {
-  const kept: Array<{ value: string; canonical: string }> = [];
-
-  for (const value of values) {
-    const canonical = canonicalizeForDedup(value);
-    if (!canonical) {
-      continue;
-    }
-
-    const isDuplicate = kept.some(
-      (entry) => entry.canonical === canonical || hasHighTokenOverlap(entry.canonical, canonical),
-    );
-
-    if (!isDuplicate) {
-      kept.push({ value, canonical });
-    }
-  }
-
-  return kept.map((entry) => entry.value);
-}
-
-function cleanList(values: string[], { stripListMarkers = false }: { stripListMarkers?: boolean } = {}): string[] {
-  const cleaned = values
-    .map((value) => {
-      const normalized = stripListMarkers ? stripLeadingListMarker(value) : value;
-      return cleanText(normalized);
-    })
-    .filter(Boolean);
-
-  return dedupeList(cleaned);
+function normalizeSkillBody(skillTitle: string, skillBody: string): string {
+  const withoutFrontmatter = stripFrontmatter(skillBody).replace(/\r\n/g, "\n").trim();
+  return ensureTopLevelHeading(skillTitle, withoutFrontmatter);
 }
 
 function isBookDerivedSlug(book: BookMetadata, candidateSlug: string): boolean {
@@ -112,30 +76,51 @@ function isBookDerivedSlug(book: BookMetadata, candidateSlug: string): boolean {
   return overlap / candidateTokens.size >= 0.6;
 }
 
-function toSkillBlueprint(book: BookMetadata, payload: SkillBlueprintPayload): SkillBlueprint {
-  const skillTitle = cleanText(payload.skillTitle);
-  const requestedSlug = slugify(payload.slug);
+function resolveSkillSlug(book: BookMetadata, requestedSlug: string, skillTitle: string): string {
+  const normalizedRequestedSlug = slugify(requestedSlug);
   const titleSlug = slugify(skillTitle);
-  const slug =
-    (requestedSlug && !isBookDerivedSlug(book, requestedSlug) ? requestedSlug : titleSlug) ||
-    requestedSlug ||
+  return (
+    (normalizedRequestedSlug && !isBookDerivedSlug(book, normalizedRequestedSlug)
+      ? normalizedRequestedSlug
+      : titleSlug) ||
+    normalizedRequestedSlug ||
     titleSlug ||
-    slugify(book.title);
-  const summary = cleanText(payload.summary);
-  const description = cleanText(payload.description) || summary;
+    slugify(book.title)
+  );
+}
+
+function toSkillFileBlueprint(book: BookMetadata, payload: SkillFilePayload): SkillFileBlueprint {
+  const skillTitle = cleanText(payload.skillTitle);
+  const description = cleanText(payload.description);
+  const slug = resolveSkillSlug(book, payload.slug, skillTitle);
 
   return {
     slug,
     skillTitle,
     description,
-    summary,
-    whenToUse: cleanList(payload.whenToUse, { stripListMarkers: true }),
-    requiredInputs: cleanList(payload.requiredInputs, { stripListMarkers: true }),
-    workflow: cleanList(payload.workflow, { stripListMarkers: true }),
-    heuristics: cleanList(payload.heuristics, { stripListMarkers: true }),
-    antiPatterns: cleanList(payload.antiPatterns, { stripListMarkers: true }),
-    starterPrompts: cleanList(payload.starterPrompts, { stripListMarkers: true }),
-    sourceNotes: cleanList(payload.sourceNotes, { stripListMarkers: true }),
+    skillBody: normalizeSkillBody(skillTitle, payload.skillBody),
+  };
+}
+
+function toSkillBlueprint(book: BookMetadata, payload: SkillBlueprintPayload): SkillBlueprint {
+  const mainSkill = toSkillFileBlueprint(book, payload);
+  const seenSlugs = new Set([mainSkill.slug]);
+  const subskills: SkillFileBlueprint[] = [];
+
+  for (const subskill of payload.subskills) {
+    const normalizedSubskill = toSkillFileBlueprint(book, subskill);
+
+    if (seenSlugs.has(normalizedSubskill.slug)) {
+      continue;
+    }
+
+    seenSlugs.add(normalizedSubskill.slug);
+    subskills.push(normalizedSubskill);
+  }
+
+  return {
+    ...mainSkill,
+    subskills,
   };
 }
 

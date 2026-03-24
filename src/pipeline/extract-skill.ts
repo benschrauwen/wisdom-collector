@@ -4,10 +4,12 @@ import { join, resolve } from "node:path";
 import { getEnvApiKey, getModels } from "@mariozechner/pi-ai";
 
 import { analyzeChunkWithAgent } from "../agents/chunk-analysis-agent.js";
+import { enrichSkillFamily } from "./enrich-skill-family.js";
 import { synthesizeSkillWithAgent } from "../agents/skill-synthesis-agent.js";
 import { loadBook } from "../loaders/load-book.js";
+import { updateReadmeOverview } from "./update-readme-overview.js";
 import { renderSkillMarkdown } from "../renderers/render-skill-markdown.js";
-import type { AnyModel, ChunkAnalysis, ExtractSkillOptions, GeneratedSkill } from "../types.js";
+import type { AnyModel, ChunkAnalysis, ExtractSkillOptions, GeneratedSkill, GeneratedSubskill } from "../types.js";
 import { chunkText } from "../utils/text.js";
 
 function resolveModel(provider: ExtractSkillOptions["provider"], modelId: string): AnyModel {
@@ -76,12 +78,42 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
     book,
     chunkAnalyses,
   });
+  const enrichedBlueprint = enrichSkillFamily(book, blueprint);
 
-  const markdown = renderSkillMarkdown(blueprint);
-  const outputDirectory = resolve(options.outputRoot, blueprint.slug);
+  const markdown = renderSkillMarkdown(enrichedBlueprint);
+  const outputDirectory = resolve(options.outputRoot, enrichedBlueprint.slug);
 
   await mkdir(outputDirectory, { recursive: true });
   await writeFile(join(outputDirectory, "SKILL.md"), markdown, "utf8");
+
+  const subskills: GeneratedSubskill[] = [];
+
+  for (const subskillBlueprint of enrichedBlueprint.subskills) {
+    const subskillMarkdown = renderSkillMarkdown(subskillBlueprint);
+    const subskillOutputDirectory = resolve(options.outputRoot, subskillBlueprint.slug);
+
+    await mkdir(subskillOutputDirectory, { recursive: true });
+    await writeFile(join(subskillOutputDirectory, "SKILL.md"), subskillMarkdown, "utf8");
+
+    subskills.push({
+      outputDirectory: subskillOutputDirectory,
+      blueprint: subskillBlueprint,
+      markdown: subskillMarkdown,
+    });
+  }
+
+  await updateReadmeOverview(book, [
+    {
+      slug: enrichedBlueprint.slug,
+      skillTitle: enrichedBlueprint.skillTitle,
+      outputDirectory,
+    },
+    ...subskills.map((subskill) => ({
+      slug: subskill.blueprint.slug,
+      skillTitle: subskill.blueprint.skillTitle,
+      outputDirectory: subskill.outputDirectory,
+    })),
+  ]);
 
   return {
     metadata: {
@@ -92,7 +124,8 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
     },
     chunkCount: chunks.length,
     outputDirectory,
-    blueprint,
+    blueprint: enrichedBlueprint,
     markdown,
+    subskills,
   };
 }

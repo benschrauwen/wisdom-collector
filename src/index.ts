@@ -6,5 +6,7 @@ export type {
   ChunkAnalysis,
   ExtractSkillOptions,
   GeneratedSkill,
+  GeneratedSubskill,
   SkillBlueprint,
+  SkillFileBlueprint,
 } from "./types.js";

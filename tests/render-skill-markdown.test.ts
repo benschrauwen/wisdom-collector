@@ -8,43 +8,40 @@ function minimalBlueprint(overrides: Partial<SkillBlueprint> = {}): SkillBluepri
     slug: "test-skill",
     skillTitle: "Test Skill",
     description: "A short description.",
-    summary: "Summary paragraph.",
-    whenToUse: ["When A"],
-    requiredInputs: ["Input 1"],
-    workflow: ["Step one", "Step two"],
-    heuristics: ["H1"],
-    antiPatterns: ["Avoid X"],
-    starterPrompts: ["Prompt 1"],
-    sourceNotes: ["Note 1"],
+    skillBody: "# Test Skill\n\nUse this skill when the situation needs a calm, structured response.",
+    subskills: [],
     ...overrides,
   };
 }
 
 describe("renderSkillMarkdown", () => {
-  it("renders frontmatter and numbered workflow", () => {
+  it("renders frontmatter and preserves the authored body", () => {
     const md = renderSkillMarkdown(minimalBlueprint());
     expect(md).toContain("---\n");
     expect(md).toContain("name: test-skill");
     expect(md).toContain("description: >-");
     expect(md).toContain("# Test Skill");
-    expect(md).toContain("## Workflow");
-    expect(md).toContain("1. Step one");
-    expect(md).toContain("2. Step two");
+    expect(md).toContain("Use this skill when the situation needs a calm, structured response.");
   });
 
-  it("omits bullet sections when arrays are empty", () => {
+  it("supports flexible markdown structures such as subskills", () => {
     const md = renderSkillMarkdown(
       minimalBlueprint({
-        whenToUse: [],
-        requiredInputs: [],
-        workflow: [],
-        heuristics: [],
-        antiPatterns: [],
-        starterPrompts: [],
-        sourceNotes: [],
+        skillBody: [
+          "# Test Skill",
+          "",
+          "## Choose a mode",
+          "- Use the main flow for team alignment.",
+          "- Use the coaching mode for one-on-one support.",
+          "",
+          "## Subskills",
+          "### Coaching mode",
+          "Help a manager diagnose resistance and respond with curiosity.",
+        ].join("\n"),
       }),
     );
-    expect(md).not.toContain("## When To Use");
-    expect(md).not.toContain("## Workflow");
+    expect(md).toContain("## Choose a mode");
+    expect(md).toContain("## Subskills");
+    expect(md).toContain("### Coaching mode");
   });
 });

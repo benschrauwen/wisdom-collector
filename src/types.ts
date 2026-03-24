@@ -35,18 +35,21 @@ export interface ChunkAnalysis {
   usefulQuotes: string[];
 }
 
-export interface SkillBlueprint {
+export interface SkillFileBlueprint {
   slug: string;
   skillTitle: string;
   description: string;
-  summary: string;
-  whenToUse: string[];
-  requiredInputs: string[];
-  workflow: string[];
-  heuristics: string[];
-  antiPatterns: string[];
-  starterPrompts: string[];
-  sourceNotes: string[];
+  skillBody: string;
+}
+
+export interface SkillBlueprint extends SkillFileBlueprint {
+  subskills: SkillFileBlueprint[];
+}
+
+export interface GeneratedSubskill {
+  outputDirectory: string;
+  blueprint: SkillFileBlueprint;
+  markdown: string;
 }
 
 export interface GeneratedSkill {
@@ -55,6 +58,7 @@ export interface GeneratedSkill {
   outputDirectory: string;
   blueprint: SkillBlueprint;
   markdown: string;
+  subskills: GeneratedSubskill[];
 }
 
 export interface ExtractSkillOptions {
