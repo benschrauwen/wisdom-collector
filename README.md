@@ -1,4 +1,4 @@
-# Skill Extractor (pi-mono)
+# Skill Extractor (pi-mono, TypeScript)
 
 A starter repository for building a community-maintained collection of AI skills distilled from books.
 
@@ -12,25 +12,22 @@ This repo provides a **simple pi-mono agent framework** for:
 
 ## Repo layout
 
-- `src/pi_mono_agent/` – core framework and CLI.
+- `src/` – core TypeScript framework and CLI.
 - `prompts/` – prompt templates for each pipeline stage.
-- `tests/` – lightweight tests for prompt loading/rendering.
+- `tests/` – Node test coverage for plan and prompt rendering.
 
-## Quick start
+## Quick start (npm)
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
+npm install
+npm test
 ```
 
 Run the pipeline planner (dry run):
 
 ```bash
-pi-mono run --input ./book.pdf --skill-name negotiation-playbook --domain business
+npm run run -- --input ./book.pdf --skill-name negotiation-playbook --domain business
 ```
-
-This outputs an execution plan and generated prompts you can feed into your preferred LLM runtime.
 
 ## pi-mono pipeline
 
@@ -45,7 +42,7 @@ The framework is intentionally minimal and model-agnostic. It uses a linear "mon
 ## Community scaling workflow
 
 1. Contributor adds a new book source.
-2. Run `pi-mono run ...` to generate prompts and plan.
+2. Run `npm run run -- --input ...` to generate prompts and plan.
 3. Execute prompts with an LLM to produce `skills/<name>/SKILL.md`.
 4. Run rubric checks and open PR.
 
