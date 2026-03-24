@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pi-mono-skill-extractor"
+version = "0.1.0"
+description = "pi-mono framework for turning books into reusable AI skills"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+pi-mono = "pi_mono_agent.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
