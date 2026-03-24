@@ -1,53 +1,88 @@
-# Skill Extractor (pi-mono, TypeScript)
+# skill-extractor
 
-A starter repository for building a community-maintained collection of AI skills distilled from books.
+`skill-extractor` bootstraps a community repo for turning books into reusable AI skill documents under `skills/`.
 
-## What this repo does
+The project uses the TypeScript `pi-mono` runtime packages:
+- `@mariozechner/pi-agent-core` for the agent loop and structured tool calls
+- `@mariozechner/pi-ai` for provider/model selection and environment-based auth
 
-This repo provides a **simple pi-mono agent framework** for:
-1. ingesting a book file (PDF, Markdown, or plain text),
-2. generating concise chapter summaries,
-3. extracting actionable procedures,
-4. compiling them into a reusable `SKILL.md` document.
+The default pipeline is intentionally simple:
+1. Load a book from `pdf`, `md`, `txt`, or another text-like file.
+2. Normalize and chunk the book into prompt-sized sections.
+3. Run a chunk-analysis agent that extracts reusable procedures, heuristics, and prompts.
+4. Run a synthesis agent that turns those notes into a final skill blueprint.
+5. Write the final skill into `skills/<skill-slug>/`.
 
-## Repo layout
-
-- `src/` – core TypeScript framework and CLI.
-- `prompts/` – prompt templates for each pipeline stage.
-- `tests/` – Node test coverage for plan and prompt rendering.
-
-## Quick start (npm)
+## Quick Start
 
 ```bash
 npm install
-npm test
+cp .env.example .env
 ```
 
-Run the pipeline planner (dry run):
+Add the provider key you already have locally, for example:
 
 ```bash
-npm run run -- --input ./book.pdf --skill-name negotiation-playbook --domain business
+OPENAI_API_KEY=...
+ANTHROPIC_API_KEY=...
+GEMINI_API_KEY=...
 ```
 
-## pi-mono pipeline
+Then run the extractor:
 
-The framework is intentionally minimal and model-agnostic. It uses a linear "mono" flow:
+```bash
+npm run extract -- --input "/absolute/path/to/book.pdf"
+```
 
-1. **Normalize** file content into clean text chunks.
-2. **Summarize** each chunk/chapter.
-3. **Extract** methods/checklists/decision rules.
-4. **Synthesize** an agent-ready `SKILL.md`.
-5. **Evaluate** quality with a rubric and revision loop.
+Or choose a different provider/model:
 
-## Community scaling workflow
+```bash
+npm run extract -- --input "/absolute/path/to/book.md" --provider anthropic --model claude-sonnet-4-20250514
+```
 
-1. Contributor adds a new book source.
-2. Run `npm run run -- --input ...` to generate prompts and plan.
-3. Execute prompts with an LLM to produce `skills/<name>/SKILL.md`.
-4. Run rubric checks and open PR.
+## CLI Options
 
-## Next steps
+```bash
+npm run extract -- --help
+```
 
-- Add actual LLM provider adapters (OpenAI, local models, etc.).
-- Add PDF/EPUB parsers for direct ingestion.
-- Add CI checks that validate generated `SKILL.md` metadata quality.
+Key options:
+- `--input`: source document path
+- `--output`: output root, defaults to `skills`
+- `--provider`: LLM provider, defaults to `openai`
+- `--model`: model id for the provider
+- `--thinking`: reasoning level, defaults to `medium`
+- `--chunk-size`: approximate max characters per chunk, defaults to `100000`
+- `--overlap`: approximate overlap between chunks, defaults to `1200`
+- `--max-chunks`: useful for cheap trial runs on long books
+- `--title` / `--author`: override metadata detection
+
+## Output Layout
+
+Each run creates a folder like:
+
+```text
+skills/<slug>/
+  SKILL.md
+```
+
+- `SKILL.md` is the agent-facing artifact to keep in the community collection.
+
+## Project Structure
+
+```text
+src/
+  agents/
+  loaders/
+  pipeline/
+  prompts/
+  renderers/
+  utils/
+skills/
+```
+
+## Notes
+
+- `books/` and `sources/` are ignored by default so raw source material is not committed accidentally.
+- The prompts are stored in `src/prompts/` and are meant to be edited as the project evolves.
+- The framework is intentionally small so the community can swap in better prompts, more stages, or different output formats without refactoring the entire repo.

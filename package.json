@@ -1,17 +1,51 @@
 {
-  "name": "pi-mono-skill-extractor",
-  "version": "0.2.0",
-  "description": "pi-mono framework for turning books into reusable AI skills",
+  "name": "skill-extractor",
+  "version": "0.1.0",
+  "description": "Extract reusable AI agent skills from books with a pi-mono TypeScript pipeline.",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
-    "pi-mono": "./src/cli.ts"
+    "skill-extractor": "./dist/cli.js"
   },
   "scripts": {
-    "run": "node --experimental-strip-types src/cli.ts run",
-    "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "check": "npm run test"
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "extract": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benschrauwen/skill-extractor.git"
+  },
+  "keywords": [
+    "agents",
+    "books",
+    "llm",
+    "pi-mono",
+    "skills"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benschrauwen/skill-extractor/issues"
+  },
+  "homepage": "https://github.com/benschrauwen/skill-extractor#readme",
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@mariozechner/pi-agent-core": "^0.62.0",
+    "@mariozechner/pi-ai": "^0.62.0",
+    "commander": "^14.0.3",
+    "dotenv": "^17.3.1",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^3.2.4"
   }
 }
