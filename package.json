@@ -1,0 +1,17 @@
+{
+  "name": "pi-mono-skill-extractor",
+  "version": "0.2.0",
+  "description": "pi-mono framework for turning books into reusable AI skills",
+  "type": "module",
+  "bin": {
+    "pi-mono": "./src/cli.ts"
+  },
+  "scripts": {
+    "run": "node --experimental-strip-types src/cli.ts run",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "check": "npm run test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
