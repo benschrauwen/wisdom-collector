@@ -22,8 +22,14 @@ Rules:
 - When you merge into an existing skill, preserve that skill's slug and title unless there is a compelling reason to change them.
 - If you keep a candidate as a new skill, use capability-based slugs and titles derived from the candidate itself rather than the book title.
 - Preserve the strongest guidance from the candidate family and incorporate the best relevant guidance from any existing skill you merge into.
-- Avoid duplicate capabilities in the final main skill plus subskills set.
-- If subskills remain, keep the main skill concise and use it as an umbrella or router.
+- The structured payload uses one top-level skill plus \`subskills\` only as a transport format. Do not assume the top-level skill should be an umbrella or parent.
+- Avoid duplicate capabilities in the final skill family.
+- Be conservative about retaining extra skills. Collapse fine-grained or chapter-sized splits unless they have clearly distinct triggers and standalone reuse value.
+- Prefer broader skills with stronger internal sections over many narrow sibling skills.
+- Never keep a book-level router skill whose main purpose is to point to the rest of the family.
+- If the family contains multiple skills, each one should stand on its own and be independently loadable.
+- An additional skill should remain only if another agent would plausibly load it by itself in a different user moment than the others.
+- It is usually better for the final family to contain 1-4 skills. Keep more only when the separations are unmistakably strong.
 - Keep the markdown practical, lean, and ready for direct reuse by another agent.
 - Put attribution only in a final \`## Source note\` section if you mention it in the body at all.
 - Call \`save_skill_blueprint\` exactly once with the final structured skill family.
@@ -48,6 +54,9 @@ Return:
 - \`subskills\`
 
 Use the overlap review to focus your attention, but decide in this pass whether each candidate should remain distinct, merge into an existing skill, or be absorbed into another candidate.
+
+Bias toward fewer, broader final skills unless the distinctions are strong enough that separate files would clearly improve reuse.
+If multiple skills remain, treat them as sibling skills in a family of equals rather than a parent skill with children.
 
 Chunk analyses:
 ${formatChunkAnalyses(chunkAnalyses)}

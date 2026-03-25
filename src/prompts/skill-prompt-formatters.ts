@@ -69,11 +69,11 @@ export function formatExistingSkills(
 }
 
 export function formatCandidateFamily(blueprint: SkillBlueprint): string {
-  const sections = [formatCandidateSkill("Candidate main skill", blueprint)];
+  const sections = [formatCandidateSkill("Candidate skill 1", blueprint)];
 
   if (blueprint.subskills.length > 0) {
     sections.push(
-      ...blueprint.subskills.map((subskill, index) => formatCandidateSkill(`Candidate subskill ${index + 1}`, subskill)),
+      ...blueprint.subskills.map((subskill, index) => formatCandidateSkill(`Candidate skill ${index + 2}`, subskill)),
     );
   }
 

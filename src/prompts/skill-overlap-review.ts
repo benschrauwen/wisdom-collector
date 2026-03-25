@@ -11,7 +11,7 @@ Book title: ${book.title}
 Book author: ${book.author ?? "Unknown"}
 
 Rules:
-- Review every candidate skill in the family, including the main skill and each subskill.
+- Review every candidate skill in the family as a peer skill. Do not assume one skill should act as the book-level umbrella for the others unless the content truly supports a standalone coordinating skill.
 - For each candidate, choose exactly one outcome:
   - \`keep\`: the candidate appears distinct enough to keep as its own skill
   - \`merge-with-existing\`: the candidate materially overlaps a specific existing skill and should be reviewed for extension
@@ -36,7 +36,7 @@ Review the candidate skill family for "${book.title}" against the current skill 
 
 Return:
 - \`summary\`: a brief overall assessment of the overlap situation
-- \`decisions\`: one item for the main skill and one item for each subskill
+- \`decisions\`: one item for each candidate skill in the family
 - For each decision include:
   - \`candidateSlug\`
   - \`outcome\`
