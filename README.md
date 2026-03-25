@@ -2,8 +2,6 @@
 
 **Distill timeless wisdom from the greatest books ever written into reusable agent skill to feed the agentic managers and CEOs of tomorrow.**
 
----
-
 AI agents are rapidly becoming high-level managers: planning work, delegating tasks, making judgment calls, and coordinating across teams. The needed wisdom for them to be effective already exists in timeless books: decades of distilled experience on leadership, strategy, operations, negotiation, systems thinking, and more. 
 
 **wisdom-collector** is a community-curated collection of the most valuable managerial lessons as agent skills, with an open-source pipeline that converts books into structured skill documents allowing you to easily contribute.
@@ -118,3 +116,4 @@ skills/         # The community skill collection
 ## License
 
 MIT
+

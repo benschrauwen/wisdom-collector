@@ -1,6 +1,6 @@
 import type { BookMetadata, ChunkAnalysis, ExistingSkill, SkillSource } from "../types.js";
 
-const MAX_EXISTING_SKILL_BODY_CHARS = 2400;
+const MAX_EXISTING_SKILL_BODY_CHARS = 10000;
 
 function formatChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): string {
   return chunkAnalyses
@@ -8,15 +8,10 @@ function formatChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): string {
       [
         `Chunk ${analysis.chunkIndex + 1}`,
         `Overview: ${analysis.overview}`,
-        `Key ideas: ${analysis.keyIdeas.join(" | ")}`,
-        `Actionable principles: ${analysis.actionablePrinciples.join(" | ")}`,
-        `Decision rules: ${analysis.decisionRules.join(" | ")}`,
-        `Agent workflows: ${analysis.agentWorkflows.join(" | ")}`,
-        `Starter prompts: ${analysis.starterPrompts.join(" | ")}`,
-        `Useful quotes: ${analysis.usefulQuotes.join(" | ")}`,
-      ].join("\n"),
+        analysis.notes,
+      ].join("\n\n"),
     )
-    .join("\n\n");
+    .join("\n\n---\n\n");
 }
 
 function truncateMarkdown(markdown: string, maxChars: number): string {
@@ -126,7 +121,8 @@ Guidelines:
 - If you split into subskills, keep the main skill concise and use it as an umbrella or router.
 - Reject overlap both against the new family you are drafting and against the existing skill collection below.
 - Borrow the spirit of modern skill-writing guidance: concise, capability-based, progressive disclosure, and specialized branches only when they improve reuse.
-- Include starter prompts, heuristics, decision rules, warnings, or examples only where they strengthen the skill; do not force a fixed outline.
+- The chunk analyses below are semi-structured evidence, not a fixed outline. Infer the recurring capability and best teaching structure instead of mirroring their local headings.
+- Include heuristics, decision rules, warnings, or examples only where they strengthen the skill; do not force a fixed outline.
 - Only include triggers, scenarios, and examples that are clearly supported by the chunk analyses.
 - Keep the markdown lean enough that another agent can absorb it quickly.
 - Credit the book and author briefly when helpful, without copying large passages or exposing local file details.

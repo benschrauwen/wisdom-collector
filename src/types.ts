@@ -27,12 +27,7 @@ export interface BookChunk {
 export interface ChunkAnalysis {
   chunkIndex: number;
   overview: string;
-  keyIdeas: string[];
-  actionablePrinciples: string[];
-  decisionRules: string[];
-  agentWorkflows: string[];
-  starterPrompts: string[];
-  usefulQuotes: string[];
+  notes: string;
 }
 
 export interface SkillFileBlueprint {

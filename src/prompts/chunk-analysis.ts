@@ -15,6 +15,8 @@ Rules (content):
 - Skip filler and anecdotes unless they encode a reusable principle, to keep signal high across many chunks.
 - Do not add claims not grounded in the excerpt—later stages trust this as evidence.
 - Preserve the author's meaning but phrase it as instructions another agent can run.
+- The synthesis stage can handle semi-structured markdown notes. Capture the strongest reusable material in whatever compact layout best fits the excerpt instead of forcing a rigid template.
+- Use headings, bullets, mini-checklists, decision rules, short example phrasing, or quotes only when they genuinely help preserve the operational value of the chunk.
 
 Rules (tool use):
 - Call \`save_chunk_analysis\` exactly once with the full structured result; the pipeline depends on that shape, not chat text.
@@ -22,8 +24,7 @@ Rules (tool use):
 
 Examples (style, not content to copy):
 - Overview — weak: "The author discusses rapport." Strong: "This chunk defines rapport as X and ties it to outcomes Y/Z."
-- Decision rule — weak: "Be professional." Strong: "If the counterpart is silent after an offer, wait and do not fill the silence with a concession."
-- Starter prompt — weak: "Help me negotiate." Strong: "Role-play a counterpart who uses aggressive anchoring; push back using the book's counter-anchors."
+- Notes — weak: "Key ideas: empathy. Decision rules: ask questions. Prompts: help me negotiate." Strong: "Use a short sequence to lower defensiveness: 1. Label the emotion without judgment. 2. Pause. 3. Ask a calibrated question before proposing terms."
   `.trim();
 }
 
@@ -32,13 +33,8 @@ export function buildChunkAnalysisUserPrompt(book: BookMetadata, chunk: BookChun
 Analyze chunk ${chunk.index + 1} of ${totalChunks} from "${book.title}".
 
 Return the result by calling \`save_chunk_analysis\` exactly once with:
-- a concise overview of the chunk (what this excerpt is *for* operationally, not a book review)
-- key ideas worth preserving
-- actionable principles an AI agent could apply
-- decision rules or if/then heuristics (testable in situations, not vague virtues)
-- agent workflows or repeatable sequences
-- starter prompts inspired by the material (concrete scenario + desired behavior)
-- short quotes or phrases worth keeping when they carry special meaning
+- \`overview\`: a concise summary of what this excerpt contributes operationally, not a book review
+- \`notes\`: compact markdown notes capturing the strongest reusable material from the excerpt in whatever structure fits best
 
 Excerpt:
 """
