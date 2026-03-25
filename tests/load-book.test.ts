@@ -7,7 +7,7 @@ import { loadBook } from "../src/loaders/load-book.js";
 
 describe("loadBook", () => {
   it("loads plain text and derives metadata", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "skill-extractor-"));
+    const dir = await mkdtemp(join(tmpdir(), "wisdom-collector-"));
     const path = join(dir, "sample_book.txt");
     await writeFile(path, "First line title\n\nBody text here.", "utf8");
 
@@ -23,7 +23,7 @@ describe("loadBook", () => {
   });
 
   it("strips front matter for markdown", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "skill-extractor-"));
+    const dir = await mkdtemp(join(tmpdir(), "wisdom-collector-"));
     const path = join(dir, "doc.md");
     await writeFile(
       path,
@@ -41,7 +41,7 @@ describe("loadBook", () => {
   });
 
   it("throws when file has no extractable text", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "skill-extractor-"));
+    const dir = await mkdtemp(join(tmpdir(), "wisdom-collector-"));
     const path = join(dir, "empty.txt");
     await writeFile(path, "   \n  \n  ", "utf8");
 

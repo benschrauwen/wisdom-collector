@@ -57,7 +57,7 @@ async function main(): Promise<void> {
   const program = new Command();
 
   program
-    .name("skill-extractor")
+    .name("wisdom-collector")
     .description("Extract a reusable AI skill from a book or long-form document.")
     .requiredOption("-i, --input <path>", "Path to the source book file (pdf, md, txt, or text-like file).")
     .option("-o, --output <path>", "Root output directory for generated skills.", "skills")

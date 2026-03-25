@@ -1,12 +1,12 @@
 {
-  "name": "skill-extractor",
+  "name": "wisdom-collector",
   "version": "0.1.0",
-  "description": "Extract reusable AI agent skills from books with a pi-mono TypeScript pipeline.",
+  "description": "Rip timeless wisdom from the greatest books and feed it to the AI managers of tomorrow.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "skill-extractor": "./dist/cli.js"
+    "wisdom-collector": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benschrauwen/skill-extractor.git"
+    "url": "git+https://github.com/benschrauwen/wisdom-collector.git"
   },
   "keywords": [
     "agents",
@@ -29,9 +29,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/benschrauwen/skill-extractor/issues"
+    "url": "https://github.com/benschrauwen/wisdom-collector/issues"
   },
-  "homepage": "https://github.com/benschrauwen/skill-extractor#readme",
+  "homepage": "https://github.com/benschrauwen/wisdom-collector#readme",
   "engines": {
     "node": ">=20"
   },
