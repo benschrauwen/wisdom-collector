@@ -1,152 +1,215 @@
 ---
 name: strategic-value-based-negotiation
 description: >-
-  Plan and run negotiations by choosing the right style, assessing power and timing, expanding tradable variables, and making conditional concessions that improve the whole deal—not just the price.
+  Run negotiations by uncovering priorities, hidden constraints, and tradable variables, then shape the conversation so the other side feels safe, understood, and able to commit to an implementable deal.
 ---
 
 # Strategic Value-Based Negotiation
 
-Use this skill when a deal depends on power, timing, uncertainty, or more than one tradable issue. The aim is to improve the total package, protect value over time, and keep control of your own reactions while you negotiate.
+Use this skill when a deal depends on power, timing, uncertainty, hidden stakeholders, or more than one tradable issue. The aim is to improve the full package, protect value over time, and keep control of your own reactions while you negotiate.
 
 ## Core stance
 
-- Do not negotiate everything; spend time only where the likely value justifies it.
-- Start from their perspective: priorities, deadlines, alternatives, pressure points, and constraints.
-- Think in total value, not price alone. Timing, risk, specification, certainty, payment, and follow-through all matter.
-- Treat discomfort as normal. Silence, rejection, pressure, and tough openings are part of the process.
-- Stay self-aware. Know your bias, ego, emotional triggers, and walk-away point before you start.
-
-## Choose the right mode
-
-Match the style to the situation, not your habit.
-
-- Use a competitive mode when power is high, trust is low, or the issue is mainly a straight trade.
-- Use a collaborative mode when dependency, long-term value, or shared risk makes broader problem-solving worthwhile.
-- Move around the continuum as the negotiation develops; do not stay locked in one style.
+- Do not negotiate to win an argument; negotiate to discover what is really driving the other side.
+- Start from their perspective: priorities, deadlines, alternatives, constraints, and emotional triggers.
+- Think in total value, not price alone. Timing, risk, certainty, follow-through, and noncash terms all matter.
+- Stay calm. Rushing, reacting, or trying to force agreement increases resistance.
+- Treat discomfort as normal. Silence, rejection, and pushback are part of the process.
 
 ## Prepare like the negotiation depends on it
 
 Planning is part of negotiation, not a pre-step.
 
-- Map the issues beyond price: volume, delivery, contract period, payment terms, specification, risk, access, options, and future rights.
+- Map the issues beyond price: timing, delivery, scope, payment terms, guarantees, access, authority, and future rights.
 - Estimate priorities on both sides.
-- Test the value of each variable: what is cheap for you but valuable to them?
-- Build your BATNA and challenge their claimed alternatives.
-- Check authority: who decides, who signs off, and what limits exist.
-- Plan the sequence: what to raise first, what to park, and where you need time.
+- Identify who can decide, who can block, and who is "behind the table."
+- Build your BATNA and test the other side’s claimed alternatives.
+- Prepare a high-end goal, a walk-away point, likely objections, and noncash items you can trade.
+- Write down the summary you want the other side to recognize as true.
 
-Useful tools:
-- Trade-storm to list every possible variable.
-- Issue map to link variables together.
-- Trade surveyor to rate value and cost on both sides.
-- Move planner to write conditional offers.
-- Record of offers to prevent drift and memory disputes.
-
-## Ask more, talk less
-
-Once negotiation starts, shift from persuading to learning.
-
-- Use questions to uncover scope, terms, risk, options, and barriers.
-- Use why questions to expose deadlines, motives, and hidden constraints.
-- Let them talk first when you need information.
-- Use silence deliberately; do not fill every gap.
-- Listen for what they do not say as much as what they do say.
-
-Good questions include:
-- What matters most right now?
+Useful prep questions:
+- What are we trying to accomplish?
+- What is the biggest challenge here?
+- Who else needs to be on board?
 - What happens if this slips?
-- Who else needs to agree?
-- What would make this possible?
-- Under what circumstances could we bridge the gap?
+- What are we missing?
 
-## Anchor, then trade
+## Use tactical empathy first
 
-When the situation is competitive, use a strong opening that is credible but rejectable.
+Tactical empathy means understanding the other side’s viewpoint and saying that understanding back without agreeing to it.
 
-- Open extreme but realistic; do not start safe just to avoid a no.
-- Hold a firm anchor with calm repetition if needed.
-- Ask how close can you get rather than backing away immediately.
-- If you concede, do it conditionally: If you X, then we Y.
-- Make smaller concessions than the other side when protecting your position.
-- Do not treat price in isolation if other variables can preserve value.
+- Focus on what they feel and why it makes sense to them.
+- Do not argue with their worldview.
+- Use empathy to lower defensiveness and open up information.
+- In tense moments, empathy is often more effective than logic.
 
-## Expand the deal instead of fighting over one number
+## Tools that do the work
 
-Look for tradeable variables beyond price.
+### Calibrated questions
 
-- Change timing: delivery dates, start dates, review dates, renewal windows, expiry dates.
-- Change risk: guarantees, remedies, penalties, deviation handling, insurance, accountability.
-- Change scope or specification: quality, support, packaging, service levels, add-ons.
-- Change commitment: volume thresholds, staged commitments, contract length, flexibility.
-- Change certainty: tighter terms cost more; flexibility should be reciprocal and conditional.
+Use open-ended **What** and **How** questions to shift problem-solving to the counterpart.
 
-Rule of thumb: if one side gets faster, looser, shorter, or more flexible, expect that to cost something unless another variable balances it.
+Examples:
+- What would make this work?
+- How am I supposed to do that?
+- How would you like me to proceed?
+- What is the biggest challenge you face?
+- How will we know we’re on track?
 
-## Protect value over the life of the deal
+Use them to:
+- buy time,
+- reveal constraints,
+- surface hidden goals,
+- create the feeling of control for the other side,
+- get them to propose a workable path.
 
-A good price can still be a bad deal.
+### Labeling
 
-- Tie time to risk and certainty.
-- Add review points, trigger points, penalties, termination terms, and remedies where needed.
-- Make future uncertainty explicit rather than hoping it will sort itself out.
-- Treat follow-through as part of value, not an afterthought.
-- If the deal is complex, pause and calculate rather than guessing.
+Name the emotion you detect in neutral language.
 
-## Control the room and the record
+- “It sounds like …”
+- “It seems like …”
+- “It looks like …”
 
-- Agree the agenda where possible so both sides know what is in play.
-- Keep only a few issues live at once.
-- Put price in the middle of the agenda, not at the start or end.
-- Park issues when needed and return later.
-- Track every offer and counteroffer in writing.
-- Remember: nothing is agreed until everything is agreed.
+After labeling, pause. Silence lets the label land and invites correction or expansion.
 
-## Handle pressure without losing control
+### Mirroring
 
-- Stay calm; separate emotion from response.
-- Do not concede just to end discomfort.
-- Use adult-to-adult language: objective, pragmatic, and respectful.
-- Attack the problem, not the person.
-- If figures get unclear, slow down or bring in someone who can calculate quickly.
-- If you are too emotionally attached, delegate the negotiation.
+Repeat the last key words or phrase, then stop.
 
-## Watch for common tactics
+- Use it to buy time, signal attention, and pull out more detail.
+- Do not rush to the next question; the pause is part of the tool.
 
-Qualify, ignore, challenge, or counter pressure tactics rather than reacting automatically.
+### Let them say no
 
-Be alert to:
-- higher authority or I need to check
-- deadlines and artificial urgency
-- added items dropped in late
-- good guy / bad guy routines
-- silence used as pressure
-- extreme openings and mock shock
-- red herrings and side issues
-- hidden terms, deliberate misunderstanding, or rewritten summaries
+Do not chase an early yes. Early yeses are often fake, polite, or shallow.
 
-Do not confuse tactical pressure with genuine necessity.
+A useful **No** can mean:
+- I need more information.
+- I am not ready.
+- I feel unsafe or pressured.
+- I want to preserve control.
+- I need to check with someone else.
 
-## Virtual and written negotiation
+Ways to invite no:
+- Is now a bad time?
+- What about this doesn’t work for you?
+- Have you given up on this?
+- What would you need to make this work?
 
-Online and written negotiation are not just face-to-face moved onto a screen.
+If they will not say no, treat that as a warning sign of confusion, hidden resistance, or missing stakeholders.
 
-- Be more deliberate with tone, wording, and silence.
-- Keep virtual meetings tight and agenda-led.
-- Brief roles in advance if you are a team.
-- Treat written messages as permanent; reread before sending.
-- If the deal is important or near final, prefer face-to-face when possible.
+### Aim for “That’s right,” not “You’re right”
 
-## After the negotiation
+- “You’re right” often ends the conversation without commitment.
+- “That’s right” signals genuine recognition and internal buy-in.
 
-Review quickly and honestly.
+To get there:
+- collect enough detail to understand their situation,
+- summarize their goals, frustrations, and constraints,
+- reflect the world as they see it,
+- keep listening until they correct you into accuracy.
 
-- What did I do well?
-- What should I do differently next time?
-- Did I manage time well?
-- Did I include the right variables?
-- Did I concede too easily at the end?
+## Read the room, not just the words
 
-Improve by treating each negotiation as a learning loop, not a one-off event.
+Pay attention to tone, pauses, body language, pronouns, hesitation, and side comments.
+
+- If words and tone conflict, follow the mismatch.
+- Look for hidden authority, hidden interests, and hidden objections.
+- Treat odd phrasing or sudden shifts as clues, not noise.
+- Ask why they are saying this now.
+
+## Bargain without splitting the difference
+
+Avoid default compromise when better information or structure is available.
+
+### Treat deadlines as leverage, not destiny
+
+- Deadlines are often flexible, emotional, or self-imposed.
+- Buy time when the other side is under pressure.
+- Ask what is actually driving the deadline.
+
+### Use fairness strategically
+
+- Fairness is emotional and can be used both defensively and offensively.
+- If they claim unfairness, ask what is fair and let them explain.
+- Build a reputation for fairness before you need it.
+
+### Anchor carefully
+
+- If you lack market knowledge, do not rush to go first.
+- Use precise, nonround numbers when you do anchor.
+- Ranges can make your low end feel like the natural landing point.
+- Deflect extreme anchors with questions, labels, or a polite no.
+
+### Trade in noncash value
+
+Look for concessions that are cheap for you but valuable to them:
+- timing,
+- access,
+- visibility,
+- flexibility,
+- role/title,
+- process,
+- future options.
+
+### Use reciprocity
+
+A small unexpected concession or gift can trigger return concessions.
+
+## Hidden constraints and Black Swans
+
+When the situation does not make sense, assume you are missing information.
+
+Look for:
+- behind-the-table decision makers,
+- unstated motives,
+- constraints the counterpart cannot easily say aloud,
+- different priorities than you assumed.
+
+Ask:
+- Why are they saying this now?
+- What are they not saying?
+- Who else matters here?
+- What would have to be true for this to work?
+
+If behavior seems irrational, test whether they are:
+- ill-informed,
+- constrained,
+- or optimizing for a different interest than you expected.
+
+## Style matching
+
+Treat people the way they need to be treated, not the way you prefer.
+
+- **Analyst:** be patient, bring data, allow silence.
+- **Accommodator:** be cordial, keep it practical, avoid empty chitchat.
+- **Assertive:** stay concise, use mirrors and calibrated questions, and soften the tone.
+
+## Anti-patterns
+
+- Arguing to win the logic battle.
+- Talking too fast.
+- Accepting a verbal yes as real commitment.
+- Making direct threats in anger.
+- Compromising just to end discomfort.
+- Ignoring who can block the deal later.
+- Treating your style as universal.
+
+## Quick working pattern
+
+Use this when a conversation is tense or stalled:
+
+1. Calm your voice and slow the pace.
+2. Label the emotion.
+3. Mirror the key phrase.
+4. Pause.
+5. Ask a calibrated question.
+6. Let them say no if needed.
+7. Summarize until you get “That’s right.”
+8. Move to implementation: how, who, and what happens next.
 
 ## Source note
-Extracted from *The Negotiation Book: Your Definitive Guide to Successful Negotiating* by Steve Gates.
+Synthesized from:
+- *The Negotiation Book: Your Definitive Guide to Successful Negotiating* by Steve Gates.
+- *Never Split the Difference: Negotiating as if Your Life Depended on It* by Chris Voss.

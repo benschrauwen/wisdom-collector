@@ -1,123 +1,106 @@
 ---
 name: high-leverage-team-management
 description: >-
-  Manage a team as a production system: define output, find bottlenecks, track the right indicators, delegate with monitoring, run useful meetings, plan against capacity, and use reviews and rewards to raise performance.
+  Manage an engineering team as a production system: set clear outcomes, inspect the right signals, delegate with monitoring, run useful 1:1s and reviews, and keep enough technical credibility to spot bottlenecks, risks, and team-health problems early.
 ---
 
 # High-Leverage Team Management
 
 ## Core idea
-Treat management as a production problem. Your output is the output of the team you supervise or influence, not your personal busyness.
+Treat management as a system for increasing team throughput, health, and technical judgment. Your job is not personal output; it is the output of the team you lead or influence.
 
-Work backward from the committed result:
-- define the output, due date, and quality bar
-- identify the limiting step or bottleneck
-- line up the work so each step finishes in sequence
-- choose the cheapest acceptable mix of capacity, inventory, and slack
-- redesign the flow when the bottleneck changes
+## Run a steady management rhythm
+### 1:1s
+- Hold regular 1:1s; weekly is the default unless both sides agree a different cadence is enough.
+- Use 1:1s for context, blockers, feedback, career growth, trust-building, and manager support.
+- Bring your own agenda and keep a shared running note.
+- Use email or chat for pure status; reserve 1:1s for issues that need judgment or trust.
+- If meetings keep getting canceled or rescheduled, push for stability.
 
-## Measure what matters
-Run the team with indicators tied to a specific operational goal.
+### Feedback
+- Give praise and correction early, close to the event, and often enough that reviews are not surprising.
+- Praise can be public; criticism should usually be private.
+- Keep feedback concrete, behavioral, and tied to observable examples.
+- Use coaching for growth, especially when the person is early in role or learning a new level.
 
-Prefer measures that are:
-- output-based, not activity-based
-- physical or countable when possible
-- paired with quality measures so quantity does not hide defects
-- early enough to show drift before the final result is missed
+### Career conversations
+- Make promotion expectations explicit.
+- Ask what evidence is needed for the next level and when decisions are made.
+- Do not assume growth happens automatically.
+- For higher levels, expect people to help define their own achievements.
+- Use stretch work and visible scope to create promotion evidence.
 
-Use a small set of indicators that show both result and risk. Watch for leading signs of trouble, not just final numbers.
+## Delegate deliberately
+Delegate based on **complexity × frequency**:
+- simple + frequent → delegate
+- simple + infrequent → do it yourself
+- complex + infrequent → do it yourself or use it as training
+- complex + frequent → delegate carefully and deliberately
 
-## Delegate for leverage
-Delegate work that does not require your direct time. Leverage rises when a short managerial action affects many people or has long-lasting effects.
+Delegate well by giving:
+- clear outcomes and quality bar
+- enough context to act without constant check-ins
+- explicit support without taking the work back
 
-Delegate well by ensuring:
-- shared goals and assumptions
-- enough context for the other person to act without detailed instructions
-- clear expectations and check-in points
+Do not confuse delegation with abdication. Stay involved enough to remove blockers and inspect early outputs. If your own planned work is slipping, hand off pieces early rather than heroically absorbing everything.
 
-Do not confuse delegation with abdication:
-- keep responsibility for the outcome
-- monitor progress against expectations
-- inspect early, rough outputs before polished final versions
-- monitor more often for new or unstable work, less often when performance is reliable
+## Lead complex work with visible planning
+- Break work from the biggest pieces down to ticket-sized pieces.
+- Identify what can happen in parallel versus what must happen in sequence.
+- Surface unknowns and risks early; planning is valuable even when estimates are imperfect.
+- Use the plan to explain how far you are from completion and what changed.
+- Near launch, revisit testing, verification, rollback, and what “good enough” means.
+- Cut scope before sacrificing quality by default.
+- When priorities shift, make tradeoffs explicit and repeat the message across the people who need to hear it.
 
-Avoid fake delegation. If you want to keep the task, say so.
+## Read the team through engineering signals
+Watch three recurring signals:
+- release frequency
+- code check-in frequency
+- incident frequency
 
-## Protect managerial time
-Use your calendar as a production plan, not an inbox.
+If the team is struggling, look for the cause before blaming effort:
+- unclear goals
+- poor decomposition
+- manual release friction
+- weak ownership of quality
+- too much firefighting
+- fear, silence, or low trust
 
-Rules:
-- batch similar work to reuse mental setup time
-- schedule around immovable deadlines and key events
-- keep slack for surprises
-- say no early when capacity is full
-- keep a small inventory of lower-priority work for spare time
-- convert recurring interruptions into scheduled forums
-- do not let free time decay into random meddling
+Common dysfunctions to diagnose early:
+- **Not shipping:** inspect release tooling, rollback speed, QA ownership, and project breakdown.
+- **Burnout / overwork:** slow the roadmap, reserve time for sustaining engineering, and cut scope.
+- **People drama / toxic behavior:** give corrective feedback quickly and neutrally; do not let a brilliant jerk buy immunity.
+- **Collaboration problems:** create regular touchpoints, improve shared understanding, and do not undermine peer teams in public.
 
-## Make meetings do real work
-Treat meetings as the medium for managerial work: information exchange, teaching, coordination, and decisions.
+## Stay technically credible
+- Keep some hands-on work: reviews, debugging, incident triage, small fixes, pairing, or production support.
+- Attend postmortems and use them to spot tooling, process, or communication gaps.
+- Ask engineers to teach you unfamiliar areas; keep learning continuously.
+- Do not become a pure message-passer between leadership and engineers.
+- When making technical calls, optimize for the team’s best sustainable decision rather than winning the argument.
 
-### Process meetings
-Use one-on-ones, staff meetings, and reviews when the goal is ongoing coordination or learning.
-- keep them predictable so people can prepare
-- make the subordinate bring the agenda when the meeting is about their work
-- use the meeting to surface trouble, questions, and future problems
-- take notes and carry nonurgent items forward in a hold file
+## Scale structure only as needed
+- Add structure as the team gets larger, older, riskier, or more interconnected.
+- Do not overdesign a small team that is already working well.
+- Use failure, not success, to decide where more structure is needed.
+- Treat process as risk management: lightweight for common work, stronger where coordination or risk is high.
+- Prefer processes that are easy to follow, self-regulating, and useful even when followed imperfectly.
+- If you become the process police, change the process instead of policing people.
 
-### Decision meetings
-Call a decision meeting only when a decision is needed and the meeting is justified.
-- state the decision to be made before the meeting
-- invite only the people who are needed
-- make the purpose, roles, and timing explicit
-- let views clash freely first, then force a clear decision and full commitment
-- send minutes quickly with decisions, actions, owners, and due dates
+## Set clear values and role expectations
+- Write down the team’s values and use them in hiring, praise, and reviews.
+- Make values behavioral and specific; avoid vague culture-fit tests.
+- Build a career ladder that matches the actual team and business stage.
+- Split technical and management growth paths so people do not have to manage to advance.
+- Keep ladders and policies as living documents; revise them as the organization changes.
 
-Do not let peer silence become fake consensus.
-
-## Match supervision to readiness
-Adjust management style to task-relevant maturity.
-
-- low readiness: give structure, direction, and close follow-up
-- moderate readiness: combine direction with discussion and support
-- high readiness: set objectives, then monitor
-
-Use the style the task requires, not the style that feels most flattering. Reassess when the person or environment changes.
-
-## Plan by closing the gap
-Planning is the act of reconciling demand, present capability, and the gap between them.
-
-1. Estimate future demand.
-2. Assess current output and pipeline reality.
-3. Decide what must change.
-
-Keep planning close enough to action that it changes behavior. Planning that cannot affect the next actionable window is just paperwork.
-
-## Review performance to improve output
-Use performance review as the highest-leverage feedback mechanism.
-
-Review against pre-set expectations, not vague impressions. Separate:
-- output measures: what was produced
-- internal measures: what is happening inside the team that affects future output
-
-When reviewing, look for:
-- what the person achieved
-- what the manager did to add value
-- what could have been done better next time
-
-Deliver reviews with three disciplines:
-- be frank
-- make sure the message is actually heard
-- keep your own insecurities out of the conversation
-
-If performance is poor, do not rush to solution mode before the person accepts responsibility. If needed, use authority to secure commitment to a course of action.
-
-## Use rewards to reinforce the right output
-Use compensation and promotion as task-relevant feedback.
-- reward real performance, not image
-- keep standards explicit enough that rankings are meaningful
-- align bonuses closely enough to the work that they still signal performance
-- promote the people whose results should define the culture
+## Use skip-levels and hold managers accountable
+- Do not rely on an open-door policy; problems often will not surface unless you ask.
+- Use skip-level 1:1s or group meetings to hear ground truth and detect managed-up distortion.
+- Hold managers accountable for team health, delivery, and feedback quality.
+- When managing managers, focus on follow-through, coaching, and willingness to surface problems early.
+- If a manager says yes to everything, hides bad news, or overpromises, help them say no and make tradeoffs explicit.
 
 ## Guardrails
 - Do not confuse activity with output.
@@ -128,4 +111,6 @@ Use compensation and promotion as task-relevant feedback.
 - Do not let personal comfort dilute honest feedback.
 
 ## Source note
-Extracted from *High Output Management* by Andy Grove.
+Synthesized from:
+- *High Output Management* by Andy Grove.
+- *The Manager’s Path: A Guide for Tech Leaders Navigating Growth and Change* by Camille Fournier.

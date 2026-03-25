@@ -157,6 +157,48 @@ Extracted skills:
 - [Disruption Response Design](skills/disruption-response-design/SKILL.md)
 <!-- /extracted-book:the-innovators-dilemma-clayton-m-christensen -->
 
+<!-- extracted-book:crucial-conversations-tools-for-talking-when-stakes-are-high-kerry-patterson-joseph-grenny-ron-mcmillan-and-al-switzler -->
+### Crucial Conversations: Tools for Talking When Stakes Are High
+Author: Kerry Patterson, Joseph Grenny, Ron McMillan, and Al Switzler
+
+Extracted skills:
+- [Manage Crucial Conversations](skills/manage-crucial-conversations/SKILL.md)
+<!-- /extracted-book:crucial-conversations-tools-for-talking-when-stakes-are-high-kerry-patterson-joseph-grenny-ron-mcmillan-and-al-switzler -->
+
+<!-- extracted-book:primal-leadership-learning-to-lead-with-emotional-intelligence-daniel-goleman -->
+### Primal Leadership: Learning to Lead with Emotional Intelligence
+Author: Daniel Goleman
+
+Extracted skills:
+- [Resonant leadership](skills/resonant-leadership/SKILL.md)
+- [Self-aware leadership development](skills/self-aware-leadership-development/SKILL.md)
+- [Culture diagnosis and change](skills/culture-diagnosis-and-change/SKILL.md)
+<!-- /extracted-book:primal-leadership-learning-to-lead-with-emotional-intelligence-daniel-goleman -->
+
+<!-- extracted-book:the-five-dysfunctions-of-a-team-a-leadership-fable-patrick-lencioni -->
+### The Five Dysfunctions of a Team: A Leadership Fable
+Author: Patrick Lencioni
+
+Extracted skills:
+- [Repair Team Dysfunction](skills/repair-team-dysfunction/SKILL.md)
+<!-- /extracted-book:the-five-dysfunctions-of-a-team-a-leadership-fable-patrick-lencioni -->
+
+<!-- extracted-book:the-managers-path-a-guide-for-tech-leaders-navigating-growth-and-change-camille-fournier -->
+### The Manager’s Path: A Guide for Tech Leaders Navigating Growth and Change
+Author: Camille Fournier
+
+Extracted skills:
+- [High-Leverage Team Management](skills/high-leverage-team-management/SKILL.md)
+<!-- /extracted-book:the-managers-path-a-guide-for-tech-leaders-navigating-growth-and-change-camille-fournier -->
+
+<!-- extracted-book:never-split-the-difference-negotiating-as-if-your-life-depended-on-it-chris-voss -->
+### Never Split the Difference: Negotiating as if Your Life Depended on It
+Author: Chris Voss
+
+Extracted skills:
+- [Strategic Value-Based Negotiation](skills/strategic-value-based-negotiation/SKILL.md)
+<!-- /extracted-book:never-split-the-difference-negotiating-as-if-your-life-depended-on-it-chris-voss -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -182,6 +224,11 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
+
+
+
+
 
 
 
