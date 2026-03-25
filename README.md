@@ -1,6 +1,12 @@
-# wisdom-collector
+# Wisdom Collector
 
-**Extract reusable skills from books into agent-friendly Markdown.**
+<p align="center">
+  <img src="banner.png" alt="Wisdom Collector banner" />
+</p>
+
+<p align="center">
+  <em>Distill timeless wisdom from the greatest books ever written into reusable agent skills to feed the agentic managers and CEOs of tomorrow..</em>
+</p>
 
 AI agents are increasingly handling planning, delegation, coordination, and judgment calls. Many of the practices they need already exist in books on leadership, strategy, operations, negotiation, and systems thinking.
 
@@ -95,6 +101,62 @@ npm run extract -- --help
 
 <!-- extracted-books:start -->
 
+<!-- extracted-book:the-effective-executive-the-definitive-guide-to-getting-the-right-things-done-peter-f-drucker -->
+### The Effective Executive: The Definitive Guide to Getting the Right Things Done
+Author: Peter F. Drucker
+
+Extracted skills:
+- [Executive Effectiveness](skills/executive-effectiveness/SKILL.md)
+<!-- /extracted-book:the-effective-executive-the-definitive-guide-to-getting-the-right-things-done-peter-f-drucker -->
+
+<!-- extracted-book:high-output-management-andy-grove -->
+### High Output Management
+Author: Andy Grove
+
+Extracted skills:
+- [High-Leverage Team Management](skills/high-leverage-team-management/SKILL.md)
+<!-- /extracted-book:high-output-management-andy-grove -->
+
+<!-- extracted-book:zero-to-one-notes-on-startups-or-how-to-build-the-future-peter-thiel -->
+### Zero to One: Notes on Startups, or How to Build the Future
+Author: Peter Thiel
+
+Extracted skills:
+- [First-Principles Startup Strategy](skills/first-principles-startup-strategy/SKILL.md)
+<!-- /extracted-book:zero-to-one-notes-on-startups-or-how-to-build-the-future-peter-thiel -->
+
+<!-- extracted-book:thinking-in-systems-a-primer-donella-h-meadows -->
+### Thinking in Systems: A Primer
+Author: Donella H. Meadows
+
+Extracted skills:
+- [System Behavior Diagnosis and Leverage](skills/system-behavior-diagnosis-and-leverage/SKILL.md)
+<!-- /extracted-book:thinking-in-systems-a-primer-donella-h-meadows -->
+
+<!-- extracted-book:the-first-90-days-critical-success-strategies-for-new-leaders-at-all-levels-michael-watkins -->
+### The First 90 Days: Critical Success Strategies for New Leaders at All Levels
+Author: Michael Watkins
+
+Extracted skills:
+- [Transition acceleration](skills/transition-acceleration/SKILL.md)
+<!-- /extracted-book:the-first-90-days-critical-success-strategies-for-new-leaders-at-all-levels-michael-watkins -->
+
+<!-- extracted-book:the-negotiation-book-your-definitive-guide-to-successful-negotiating-steve-gates -->
+### The Negotiation Book: Your Definitive Guide to Successful Negotiating
+Author: Steve Gates
+
+Extracted skills:
+- [Strategic Value-Based Negotiation](skills/strategic-value-based-negotiation/SKILL.md)
+<!-- /extracted-book:the-negotiation-book-your-definitive-guide-to-successful-negotiating-steve-gates -->
+
+<!-- extracted-book:the-innovators-dilemma-clayton-m-christensen -->
+### The Innovator’s Dilemma
+Author: Clayton M. Christensen
+
+Extracted skills:
+- [Disruption Response Design](skills/disruption-response-design/SKILL.md)
+<!-- /extracted-book:the-innovators-dilemma-clayton-m-christensen -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -120,6 +182,16 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
+
+
+
+
+
+
+
+
+
 
 
 
