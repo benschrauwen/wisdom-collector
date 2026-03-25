@@ -199,6 +199,30 @@ Extracted skills:
 - [Strategic Value-Based Negotiation](skills/strategic-value-based-negotiation/SKILL.md)
 <!-- /extracted-book:never-split-the-difference-negotiating-as-if-your-life-depended-on-it-chris-voss -->
 
+<!-- extracted-book:measure-what-matters-how-google-bono-and-the-gates-foundation-rock-the-world-with-okrs-john-doerr -->
+### Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs
+Author: John Doerr
+
+Extracted skills:
+- [Run Transparent OKRs](skills/run-transparent-okrs/SKILL.md)
+<!-- /extracted-book:measure-what-matters-how-google-bono-and-the-gates-foundation-rock-the-world-with-okrs-john-doerr -->
+
+<!-- extracted-book:getting-to-yes-negotiating-an-agreement-without-giving-in-roger-fisher-and-william-ury -->
+### Getting to Yes: Negotiating an Agreement Without Giving In
+Author: Roger Fisher and William Ury
+
+Extracted skills:
+- [Strategic Value-Based Negotiation](skills/strategic-value-based-negotiation/SKILL.md)
+<!-- /extracted-book:getting-to-yes-negotiating-an-agreement-without-giving-in-roger-fisher-and-william-ury -->
+
+<!-- extracted-book:crossing-the-chasm-marketing-and-selling-high-tech-products-to-mainstream-customers-geoffrey-a-moore -->
+### Crossing the Chasm: Marketing and Selling High-Tech Products to Mainstream Customers
+Author: Geoffrey A. Moore
+
+Extracted skills:
+- [Beachhead Market Launch](skills/beachhead-market-launch/SKILL.md)
+<!-- /extracted-book:crossing-the-chasm-marketing-and-selling-high-tech-products-to-mainstream-customers-geoffrey-a-moore -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -224,6 +248,9 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
+
+
 
 
 
