@@ -1,4 +1,6 @@
-import type { BookMetadata, ChunkAnalysis } from "../types.js";
+import type { BookMetadata, ChunkAnalysis, ExistingSkill, SkillSource } from "../types.js";
+
+const MAX_EXISTING_SKILL_BODY_CHARS = 2400;
 
 function formatChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): string {
   return chunkAnalyses
@@ -12,6 +14,46 @@ function formatChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): string {
         `Agent workflows: ${analysis.agentWorkflows.join(" | ")}`,
         `Starter prompts: ${analysis.starterPrompts.join(" | ")}`,
         `Useful quotes: ${analysis.usefulQuotes.join(" | ")}`,
+      ].join("\n"),
+    )
+    .join("\n\n");
+}
+
+function truncateMarkdown(markdown: string, maxChars: number): string {
+  const normalized = markdown.replace(/\r\n/g, "\n").trim();
+
+  if (normalized.length <= maxChars) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, maxChars).trimEnd()}\n...[truncated]`;
+}
+
+function formatSourceMentions(sourceMentions: SkillSource[]): string {
+  if (sourceMentions.length === 0) {
+    return "No recorded sources.";
+  }
+
+  return sourceMentions
+    .map((source) => (source.author ? `*${source.title}* by ${source.author}` : `*${source.title}*`))
+    .join(" | ");
+}
+
+function formatExistingSkills(existingSkills: ExistingSkill[]): string {
+  if (existingSkills.length === 0) {
+    return "No existing skills were found in the output directory.";
+  }
+
+  return existingSkills
+    .map((skill, index) =>
+      [
+        `Existing skill ${index + 1}`,
+        `Slug: ${skill.slug}`,
+        `Title: ${skill.skillTitle}`,
+        `Description: ${skill.description || "No description."}`,
+        `Sources: ${formatSourceMentions(skill.sourceMentions)}`,
+        "Current markdown body excerpt:",
+        truncateMarkdown(skill.skillBody, MAX_EXISTING_SKILL_BODY_CHARS),
       ].join("\n"),
     )
     .join("\n\n");
@@ -38,11 +80,17 @@ Rules:
 - Use headings and subsections that fit the material. Do not force sections like "Required Inputs" or "When To Use" unless they genuinely improve the skill.
 - Use imperative guidance, decision rules, anti-patterns, and short examples where they help another agent act.
 - Merge overlapping ideas into the strongest phrasing instead of producing near-duplicate bullets or sections.
+- Review the existing skill collection before deciding whether the book should create a new skill or extend an existing one.
+- Never create a main skill or subskill that substantially overlaps an existing skill in the collection. Extend the existing skill instead when the capability is materially the same.
+- When extending an existing skill, preserve its current slug and skill title unless there is a compelling reason to change them.
+- When extending, keep the strongest guidance from the existing skill, integrate the genuinely new learnings from this book, and return the merged skill as the final markdown.
 - If the book clearly contains multiple distinct reusable capabilities, you may create \`subskills\`. Only split when the capabilities would be reusable on their own or would otherwise make the main skill bloated.
 - When you create subskills, make the main skill a concise router that explains when to use each subskill and preserves only the shared principles at the top level.
+- Apply the same overlap check to every proposed subskill. Reuse or extend an existing skill rather than creating an overlapping sibling.
 - Include guardrails and anti-patterns when the source material implies them.
 - No absolute paths, local filenames, or machine-specific details—skills are shared and relocated.
 - Credit the book and author in high-level source notes only; do not paste chunk indices, file paths, or extraction metadata.
+- Keep source notes compatible with multi-source skills when the final skill is extended from prior material plus this book.
 - Stay faithful to the book while wording the skill so it helps on similar tasks beyond this one title.
 - Call \`save_skill_blueprint\` exactly once with the full structured result; do not substitute free-form chat for the tool.
 
@@ -51,28 +99,40 @@ Examples (style, not content to copy):
 - Description — weak: "A skill based on a book about strategy." Strong: "Helps diagnose recurring situations, choose a repeatable response, and act when similar plain-language requests appear."
 - Body structure — weak: "Fill every possible section whether needed or not." Strong: "Choose a compact set of headings that makes the workflow easy to follow."
 - Subskills — weak: "Invent extra skills for every chapter." Strong: "Split only when the notes support distinct reusable capabilities with different triggers or workflows."
+- Existing skills — weak: "Create a fresh skill even though the collection already covers the same capability." Strong: "Extend the existing skill with new guidance and keep continuity for its slug and title."
   `.trim();
 }
 
-export function buildSkillSynthesisUserPrompt(book: BookMetadata, chunkAnalyses: ChunkAnalysis[]): string {
+export function buildSkillSynthesisUserPrompt(
+  book: BookMetadata,
+  chunkAnalyses: ChunkAnalysis[],
+  existingSkills: ExistingSkill[],
+): string {
   return `
 Create a reusable skill from the extracted notes for "${book.title}".
+
+Before you create any new main skill or subskill, compare the capability against the existing skill collection below and check for overlap.
 
 Return:
 - \`slug\`: a short, capability-based slug suitable for the folder name and frontmatter \`name\`, derived from the capability rather than the book title or source filename
 - \`skillTitle\`: a strong title focused on the capability, not the book title
 - \`description\`: a short frontmatter description in third person covering what the skill does, when to use it, and nearby phrasings or situations where it should still apply
 - \`skillBody\`: the actual markdown body that should appear after the YAML frontmatter in \`SKILL.md\`; write the skill file itself, using whatever headings and layout best fit the material
-- \`subskills\`: zero or more additional skill files for clearly distinct reusable capabilities discovered in the notes; each subskill should include its own \`slug\`, \`skillTitle\`, \`description\`, and \`skillBody\`; use an empty array when one main skill is the better fit
+- \`subskills\`: zero or more additional skill files for clearly distinct reusable capabilities discovered in the notes; each subskill should include its own \`slug\`, \`skillTitle\`, \`description\`, and \`skillBody\`; use an empty array when one main skill is the better fit; if a subskill extends an existing skill, reuse that skill's current slug and title
 
 Guidelines:
 - Prefer one strong skill unless the notes clearly support a split into distinct capabilities or modes.
+- If the best fit is to extend an existing skill, reuse its slug and title and return the merged skill content instead of inventing a near-duplicate.
 - If you split into subskills, keep the main skill concise and use it as an umbrella or router.
+- Reject overlap both against the new family you are drafting and against the existing skill collection below.
 - Borrow the spirit of modern skill-writing guidance: concise, capability-based, progressive disclosure, and specialized branches only when they improve reuse.
 - Include starter prompts, heuristics, decision rules, warnings, or examples only where they strengthen the skill; do not force a fixed outline.
 - Only include triggers, scenarios, and examples that are clearly supported by the chunk analyses.
 - Keep the markdown lean enough that another agent can absorb it quickly.
 - Credit the book and author briefly when helpful, without copying large passages or exposing local file details.
+
+Existing skills:
+${formatExistingSkills(existingSkills)}
 
 Chunk analyses:
 ${formatChunkAnalyses(chunkAnalyses)}

@@ -2,7 +2,7 @@ import { Type, type Static, type ThinkingLevel } from "@mariozechner/pi-ai";
 
 import { runStructuredToolAgent } from "./run-structured-tool-agent.js";
 import { buildSkillSynthesisSystemPrompt, buildSkillSynthesisUserPrompt } from "../prompts/skill-synthesis.js";
-import type { AnyModel, BookMetadata, ChunkAnalysis, SkillBlueprint, SkillFileBlueprint } from "../types.js";
+import type { AnyModel, BookMetadata, ChunkAnalysis, ExistingSkill, SkillBlueprint, SkillFileBlueprint } from "../types.js";
 import { slugify } from "../utils/slugify.js";
 
 const skillFileSchema = Type.Object({
@@ -129,6 +129,7 @@ interface SynthesizeSkillOptions {
   thinkingLevel: ThinkingLevel;
   book: BookMetadata;
   chunkAnalyses: ChunkAnalysis[];
+  existingSkills: ExistingSkill[];
 }
 
 export async function synthesizeSkillWithAgent(
@@ -138,7 +139,7 @@ export async function synthesizeSkillWithAgent(
     model: options.model,
     thinkingLevel: options.thinkingLevel,
     systemPrompt: buildSkillSynthesisSystemPrompt(options.book),
-    userPrompt: buildSkillSynthesisUserPrompt(options.book, options.chunkAnalyses),
+    userPrompt: buildSkillSynthesisUserPrompt(options.book, options.chunkAnalyses, options.existingSkills),
     tool: {
       name: "save_skill_blueprint",
       label: "Save Skill Blueprint",

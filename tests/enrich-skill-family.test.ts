@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { enrichSkillFamily } from "../src/pipeline/enrich-skill-family.js";
-import type { BookMetadata, SkillBlueprint } from "../src/types.js";
+import type { BookMetadata, ExistingSkill, SkillBlueprint } from "../src/types.js";
 
 const book: BookMetadata = {
   title: "High Output Management",
@@ -58,11 +58,44 @@ describe("enrichSkillFamily", () => {
     );
   });
 
-  it("preserves an existing source section and adds one when missing", () => {
+  it("normalizes the source section and adds one when missing", () => {
     const enriched = enrichSkillFamily(book, makeBlueprint());
 
     expect(enriched.skillBody.match(/^##\s+Source note\b/gim)).toHaveLength(1);
+    expect(enriched.skillBody).toContain("Extracted from *High Output Management* by Andy Grove.");
     expect(enriched.subskills[0]?.skillBody).toContain("## Source note");
     expect(enriched.subskills[0]?.skillBody).toContain("Extracted from *High Output Management* by Andy Grove.");
+  });
+
+  it("merges prior source mentions when a skill extends an existing one", () => {
+    const existingSkills: ExistingSkill[] = [
+      {
+        filePath: "/tmp/high-leverage-management/SKILL.md",
+        slug: "high-leverage-management",
+        skillTitle: "High-Leverage Management",
+        description: "Umbrella skill for managerial leverage and output.",
+        skillBody: [
+          "# High-Leverage Management",
+          "",
+          "Existing guidance.",
+          "",
+          "## Source note",
+          "Extracted from *The Effective Executive* by Peter Drucker.",
+        ].join("\n"),
+        sourceMentions: [
+          {
+            title: "The Effective Executive",
+            author: "Peter Drucker",
+          },
+        ],
+      },
+    ];
+
+    const enriched = enrichSkillFamily(book, makeBlueprint(), existingSkills);
+
+    expect(enriched.skillBody.match(/^##\s+Source note\b/gim)).toHaveLength(1);
+    expect(enriched.skillBody).toContain("Synthesized from:");
+    expect(enriched.skillBody).toContain("*The Effective Executive* by Peter Drucker.");
+    expect(enriched.skillBody).toContain("*High Output Management* by Andy Grove.");
   });
 });

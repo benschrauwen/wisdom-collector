@@ -15,8 +15,8 @@ The extraction pipeline is intentionally simple:
 1. **Load** a book from PDF, Markdown, plain text, or another text-like format.
 2. **Chunk** the content into prompt-sized sections with configurable overlap.
 3. **Analyze** each chunk with an LLM agent that extracts reusable procedures, heuristics, and decision frameworks.
-4. **Synthesize** the extracted notes into a final, structured skill document.
-5. **Write** the result into `skills/<skill-slug>/SKILL.md`.
+4. **Synthesize** the extracted notes into a final, structured skill document, checking the existing collection first to avoid overlap.
+5. **Write or extend** the result in `skills/<skill-slug>/SKILL.md` with proper source attribution.
 
 The output is a clean, agent-readable skill Markdown file.
 
@@ -28,6 +28,7 @@ The output is a clean, agent-readable skill Markdown file.
 
 - Skills extracted from high-quality, well-regarded books
 - Clear, actionable frameworks that an agent can apply (not just summaries)
+- Extends an existing skill when the new source deepens the same capability instead of creating a near-duplicate
 - Proper attribution to the source book and author
 
 ### Licensing requirement
@@ -45,7 +46,7 @@ You **must** have the right to create derivative works from the source material.
 
 1. Fork this repo
 2. Run the extractor on your book (see [Quick Start](#quick-start) below)
-3. Review and refine the generated `SKILL.md` — the LLM output is a strong draft, but human judgment makes it great
+3. Review and refine the generated or extended `SKILL.md` — the LLM output is a strong draft, but human judgment makes it great
 4. Open a pull request with your new `skills/<skill-slug>/` folder
 
 ## Quick Start

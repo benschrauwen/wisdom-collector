@@ -42,8 +42,18 @@ export interface SkillFileBlueprint {
   skillBody: string;
 }
 
+export interface SkillSource {
+  title: string;
+  author?: string;
+}
+
 export interface SkillBlueprint extends SkillFileBlueprint {
   subskills: SkillFileBlueprint[];
+}
+
+export interface ExistingSkill extends SkillFileBlueprint {
+  filePath: string;
+  sourceMentions: SkillSource[];
 }
 
 export interface GeneratedSubskill {

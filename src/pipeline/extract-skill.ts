@@ -5,6 +5,7 @@ import { getEnvApiKey, getModels } from "@mariozechner/pi-ai";
 
 import { analyzeChunkWithAgent } from "../agents/chunk-analysis-agent.js";
 import { enrichSkillFamily } from "./enrich-skill-family.js";
+import { loadExistingSkills } from "./load-existing-skills.js";
 import { synthesizeSkillWithAgent } from "../agents/skill-synthesis-agent.js";
 import { loadBook } from "../loaders/load-book.js";
 import { updateReadmeOverview } from "./update-readme-overview.js";
@@ -44,10 +45,16 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
   warnIfCredentialsAreMissing(options.provider);
 
   const model = resolveModel(options.provider, options.modelId);
+  const outputRoot = resolve(options.outputRoot);
   const book = await loadBook(options.inputPath, {
     titleOverride: options.titleOverride,
     authorOverride: options.authorOverride,
   });
+  const existingSkills = await loadExistingSkills(outputRoot);
+
+  if (existingSkills.length > 0) {
+    console.log(`Loaded ${existingSkills.length} existing skill(s) for overlap checks.`);
+  }
 
   const allChunks = chunkText(book.text, options.chunkSize, options.overlap);
   const chunks =
@@ -77,11 +84,19 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
     thinkingLevel: options.thinkingLevel,
     book,
     chunkAnalyses,
+    existingSkills,
   });
-  const enrichedBlueprint = enrichSkillFamily(book, blueprint);
+  const reusedSkillSlugs = [...new Set([blueprint.slug, ...blueprint.subskills.map((subskill) => subskill.slug)])].filter(
+    (slug) => existingSkills.some((skill) => skill.slug === slug),
+  );
+  if (reusedSkillSlugs.length > 0) {
+    console.log(`Extending existing skill(s): ${reusedSkillSlugs.join(", ")}`);
+  }
+
+  const enrichedBlueprint = enrichSkillFamily(book, blueprint, existingSkills);
 
   const markdown = renderSkillMarkdown(enrichedBlueprint);
-  const outputDirectory = resolve(options.outputRoot, enrichedBlueprint.slug);
+  const outputDirectory = resolve(outputRoot, enrichedBlueprint.slug);
 
   await mkdir(outputDirectory, { recursive: true });
   await writeFile(join(outputDirectory, "SKILL.md"), markdown, "utf8");
@@ -90,7 +105,7 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
 
   for (const subskillBlueprint of enrichedBlueprint.subskills) {
     const subskillMarkdown = renderSkillMarkdown(subskillBlueprint);
-    const subskillOutputDirectory = resolve(options.outputRoot, subskillBlueprint.slug);
+    const subskillOutputDirectory = resolve(outputRoot, subskillBlueprint.slug);
 
     await mkdir(subskillOutputDirectory, { recursive: true });
     await writeFile(join(subskillOutputDirectory, "SKILL.md"), subskillMarkdown, "utf8");
