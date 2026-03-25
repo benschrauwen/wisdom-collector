@@ -17,6 +17,8 @@ describe("loadBook", () => {
       expect(book.text).toContain("Body text");
       expect(book.wordCount).toBeGreaterThan(0);
       expect(book.title).toBe("First line title");
+      expect(book.loadDetails.extractionMethod).toBe("text-file");
+      expect(book.loadDetails.sourceByteCount).toBeGreaterThan(0);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
@@ -35,6 +37,8 @@ describe("loadBook", () => {
       const book = await loadBook(path);
       expect(book.text).toContain("Content.");
       expect(book.title).toBe("Real Title");
+      expect(book.loadDetails.extractionMethod).toBe("text-file");
+      expect(book.loadDetails.extractionNotes[0]).toMatch(/front matter/i);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }

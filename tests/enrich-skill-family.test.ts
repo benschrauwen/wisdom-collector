@@ -18,10 +18,9 @@ function makeBlueprint(): SkillBlueprint {
     skillBody: [
       "# High-Leverage Management",
       "",
-      "Use this as the umbrella skill when the management problem spans multiple domains.",
+      "*Source: Andy Grove,* High Output Management",
       "",
-      "## Source note",
-      "Grounded in Andy Grove's *High Output Management*.",
+      "Use this as the umbrella skill when the management problem spans multiple domains.",
     ].join("\n"),
     subskills: [
       {
@@ -62,6 +61,7 @@ describe("enrichSkillFamily", () => {
     const enriched = enrichSkillFamily(book, makeBlueprint());
 
     expect(enriched.skillBody.match(/^##\s+Source note\b/gim)).toHaveLength(1);
+    expect(enriched.skillBody).not.toContain("*Source: Andy Grove,* High Output Management");
     expect(enriched.skillBody).toContain("Extracted from *High Output Management* by Andy Grove.");
     expect(enriched.subskills[0]?.skillBody).toContain("## Source note");
     expect(enriched.subskills[0]?.skillBody).toContain("Extracted from *High Output Management* by Andy Grove.");

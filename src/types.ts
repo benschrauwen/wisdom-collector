@@ -3,6 +3,7 @@ import type { Api, KnownProvider, Model, ThinkingLevel } from "@mariozechner/pi-
 export type AnyModel = Model<Api>;
 
 export type BookFormat = "pdf" | "md" | "txt" | "text";
+export type BookExtractionMethod = "text-file" | "pdf-text" | "pdf-ocr";
 
 export interface BookMetadata {
   title: string;
@@ -11,10 +12,23 @@ export interface BookMetadata {
   format: BookFormat;
 }
 
+export interface InferredBookMetadata {
+  title: string;
+  author?: string;
+}
+
+export interface BookLoadDetails {
+  sourceByteCount: number;
+  pageCount?: number;
+  extractionMethod: BookExtractionMethod;
+  extractionNotes: string[];
+}
+
 export interface LoadedBook extends BookMetadata {
   text: string;
   wordCount: number;
   characterCount: number;
+  loadDetails: BookLoadDetails;
 }
 
 export interface BookChunk {
@@ -49,6 +63,21 @@ export interface SkillBlueprint extends SkillFileBlueprint {
 export interface ExistingSkill extends SkillFileBlueprint {
   filePath: string;
   sourceMentions: SkillSource[];
+}
+
+export type SkillOverlapReviewOutcome = "keep" | "merge-with-existing" | "drop-as-duplicate";
+
+export interface SkillOverlapDecision {
+  candidateSlug: string;
+  outcome: SkillOverlapReviewOutcome;
+  matchedExistingSkillSlug?: string;
+  matchedCandidateSkillSlug?: string;
+  rationale: string;
+}
+
+export interface SkillOverlapReview {
+  summary: string;
+  decisions: SkillOverlapDecision[];
 }
 
 export interface GeneratedSubskill {

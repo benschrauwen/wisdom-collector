@@ -1,9 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 
-import { PDFParse } from "pdf-parse";
-
 import type { BookFormat, LoadedBook } from "../types.js";
+import { extractPdfDocument } from "./pdf-extraction.js";
 import {
   deriveTitleFromFilename,
   deriveTitleFromText,
@@ -15,6 +14,7 @@ import {
 interface LoadBookOverrides {
   titleOverride?: string;
   authorOverride?: string;
+  logger?: (message: string) => void;
 }
 
 function detectFormat(inputPath: string): BookFormat {
@@ -36,32 +36,22 @@ function detectFormat(inputPath: string): BookFormat {
 }
 
 async function loadPdfBook(inputPath: string, overrides: LoadBookOverrides): Promise<LoadedBook> {
-  const data = await readFile(inputPath);
-  const parser = new PDFParse({ data });
+  const extractedPdf = await extractPdfDocument(inputPath, {
+    logger: overrides.logger,
+  });
+  const title = overrides.titleOverride ?? extractedPdf.title?.trim() ?? deriveTitleFromFilename(inputPath);
+  const author = overrides.authorOverride ?? extractedPdf.author?.trim() ?? undefined;
 
-  try {
-    const info = await parser.getInfo().catch(() => undefined);
-    const textResult = await parser.getText();
-    const text = normalizeExtractedText(textResult.text);
-    const infoDictionary = info?.info as { Title?: string; Author?: string } | undefined;
-    const title =
-      overrides.titleOverride ??
-      infoDictionary?.Title?.trim() ??
-      deriveTitleFromFilename(inputPath);
-    const author = overrides.authorOverride ?? infoDictionary?.Author?.trim() ?? undefined;
-
-    return {
-      title,
-      author,
-      sourcePath: inputPath,
-      format: "pdf",
-      text,
-      wordCount: estimateWordCount(text),
-      characterCount: text.length,
-    };
-  } finally {
-    await parser.destroy();
-  }
+  return {
+    title,
+    author,
+    sourcePath: inputPath,
+    format: "pdf",
+    text: extractedPdf.text,
+    wordCount: estimateWordCount(extractedPdf.text),
+    characterCount: extractedPdf.text.length,
+    loadDetails: extractedPdf.loadDetails,
+  };
 }
 
 async function loadTextBook(
@@ -69,7 +59,8 @@ async function loadTextBook(
   format: Exclude<BookFormat, "pdf">,
   overrides: LoadBookOverrides,
 ): Promise<LoadedBook> {
-  const raw = await readFile(inputPath, "utf8");
+  const rawBuffer = await readFile(inputPath);
+  const raw = rawBuffer.toString("utf8");
   const withoutFrontMatter = format === "md" ? stripFrontMatter(raw) : raw;
   const text = normalizeExtractedText(withoutFrontMatter);
   const title =
@@ -85,6 +76,14 @@ async function loadTextBook(
     text,
     wordCount: estimateWordCount(text),
     characterCount: text.length,
+    loadDetails: {
+      sourceByteCount: rawBuffer.byteLength,
+      extractionMethod: "text-file",
+      extractionNotes:
+        format === "md"
+          ? ["Loaded the source as UTF-8 text and removed markdown front matter before chunking."]
+          : ["Loaded the source as UTF-8 text."],
+    },
   };
 }
 

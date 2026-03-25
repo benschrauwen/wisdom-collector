@@ -1,31 +1,35 @@
 # wisdom-collector
 
-**Distill timeless wisdom from the greatest books ever written into reusable agent skill to feed the agentic managers and CEOs of tomorrow.**
+**Extract reusable skills from books into agent-friendly Markdown.**
 
-AI agents are rapidly becoming high-level managers: planning work, delegating tasks, making judgment calls, and coordinating across teams. The needed wisdom for them to be effective already exists in timeless books: decades of distilled experience on leadership, strategy, operations, negotiation, systems thinking, and more. 
+AI agents are increasingly handling planning, delegation, coordination, and judgment calls. Many of the practices they need already exist in books on leadership, strategy, operations, negotiation, and systems thinking.
 
-**wisdom-collector** is a community-curated collection of the most valuable managerial lessons as agent skills, with an open-source pipeline that converts books into structured skill documents allowing you to easily contribute.
+**wisdom-collector** is an open collection of reusable skills distilled from books, plus a pipeline that turns source material into structured `SKILL.md` documents that others can review and improve.
+
+This is not a book-summary project. The goal is to build a reusable collection of skills grounded in the original source material.
 
 ## How It Works
 
-The extraction pipeline is intentionally simple:
+The extraction pipeline is simple:
 
-1. **Load** a book from PDF, Markdown, plain text, or another text-like format.
+1. **Load and parse** a book from PDF, Markdown, plain text, or another text-like format.
 2. **Chunk** the content into prompt-sized sections with configurable overlap.
 3. **Analyze** each chunk with an LLM agent that extracts reusable procedures, heuristics, and decision frameworks.
 4. **Synthesize** the extracted notes into a final, structured skill document, checking the existing collection first to avoid overlap.
 5. **Write or extend** the result in `skills/<skill-slug>/SKILL.md` with proper source attribution.
 
-The output is a clean, agent-readable skill Markdown file.
+The output is a skill Markdown file that another agent can load and apply.
+
+Because the pipeline works from parsed source material, it does not ask the LLM to summarize a book from memory. That keeps the output closer to the source and easier to review.
 
 ## Contributing Skills
 
-**This is the heart of the project.** We want people to extract skills from books and contribute them back to the collection. The more skills we curate, the more capable every agent becomes.
+The main goal is to extract skills from books and contribute them back to the collection.
 
 ### What makes a good contribution
 
 - Skills extracted from high-quality, well-regarded books
-- Clear, actionable frameworks that an agent can apply (not just summaries)
+- Clear skills and frameworks that an agent can apply, not book summaries
 - Extends an existing skill when the new source deepens the same capability instead of creating a near-duplicate
 - Proper attribution to the source book and author
 
@@ -44,7 +48,7 @@ You **must** have the right to create derivative works from the source material.
 
 1. Fork this repo
 2. Run the extractor on your book (see [Quick Start](#quick-start) below)
-3. Review and refine the generated or extended `SKILL.md` — the LLM output is a strong draft, but human judgment makes it great
+3. Review and refine the generated or extended `SKILL.md`
 4. Open a pull request with your new `skills/<skill-slug>/` folder
 
 ## Quick Start
@@ -108,12 +112,15 @@ skills/         # The community skill collection
 
 ## Design Principles
 
-- **Small and hackable.** The framework is intentionally minimal so the community can swap in better prompts, add pipeline stages, or change output formats without refactoring everything.
-- **Provider-agnostic.** Works with OpenAI, Anthropic, and Google out of the box via `@mariozechner/pi-ai`.
+- **Small and editable.** The framework stays minimal so you can swap prompts, add pipeline stages, or change output formats without major refactors.
+- **Provider-agnostic.** Works with OpenAI, Anthropic, and Google via `@mariozechner/pi-ai`.
 - **Agent-framework-agnostic.** The output is plain Markdown. Use it with any agent system.
 - **No raw source material in the repo.** `books/` and `sources/` are gitignored. Only distilled skill artifacts are committed.
 
 ## License
 
 MIT
+
+
+
 

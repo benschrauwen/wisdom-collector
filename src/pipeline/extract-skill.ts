@@ -3,14 +3,20 @@ import { join, resolve } from "node:path";
 
 import { getEnvApiKey, getModels } from "@mariozechner/pi-ai";
 
+import { inferBookMetadataWithAgent } from "../agents/book-metadata-agent.js";
 import { analyzeChunkWithAgent } from "../agents/chunk-analysis-agent.js";
+import { finalizeSkillWithAgent } from "../agents/skill-finalization-agent.js";
+import { reviewSkillOverlapWithAgent } from "../agents/skill-overlap-review-agent.js";
 import { enrichSkillFamily } from "./enrich-skill-family.js";
 import { loadExistingSkills } from "./load-existing-skills.js";
-import { synthesizeSkillWithAgent } from "../agents/skill-synthesis-agent.js";
+import { synthesizeSkillCandidateWithAgent } from "../agents/skill-synthesis-agent.js";
 import { loadBook } from "../loaders/load-book.js";
 import { updateReadmeOverview } from "./update-readme-overview.js";
 import { renderSkillMarkdown } from "../renderers/render-skill-markdown.js";
-import type { AnyModel, ChunkAnalysis, ExtractSkillOptions, GeneratedSkill, GeneratedSubskill } from "../types.js";
+import type { AnyModel, ChunkAnalysis, ExtractSkillOptions, GeneratedSkill, GeneratedSubskill, LoadedBook } from "../types.js";
+import { applyInferredBookMetadata, buildMetadataInferenceExcerpt } from "../utils/book-metadata.js";
+import { formatBookLoadSummary } from "../utils/book-load-summary.js";
+import { selectExistingSkillsForFinalization } from "../utils/skill-overlap.js";
 import { chunkText } from "../utils/text.js";
 
 function resolveModel(provider: ExtractSkillOptions["provider"], modelId: string): AnyModel {
@@ -41,24 +47,79 @@ function warnIfCredentialsAreMissing(provider: ExtractSkillOptions["provider"]):
   }
 }
 
+async function maybeInferBookMetadata(
+  book: LoadedBook,
+  options: ExtractSkillOptions,
+  model: AnyModel,
+): Promise<LoadedBook> {
+  if (options.titleOverride && options.authorOverride) {
+    return book;
+  }
+
+  const openingExcerpt = buildMetadataInferenceExcerpt(book.text);
+  if (!openingExcerpt) {
+    return book;
+  }
+
+  console.log("Inferring title and author from the opening text...");
+  const inferredMetadata = await inferBookMetadataWithAgent({
+    model,
+    thinkingLevel: options.thinkingLevel,
+    book,
+    openingExcerpt,
+  });
+  const enrichedBook = applyInferredBookMetadata(book, inferredMetadata, {
+    titleOverride: options.titleOverride,
+    authorOverride: options.authorOverride,
+  });
+  const metadataChanges: string[] = [];
+
+  if (enrichedBook.title !== book.title) {
+    metadataChanges.push(`title "${enrichedBook.title}"`);
+  }
+
+  if (enrichedBook.author !== book.author) {
+    metadataChanges.push(`author "${enrichedBook.author ?? "Unknown"}"`);
+  }
+
+  if (metadataChanges.length > 0) {
+    console.log(`Opening-text metadata inference selected ${metadataChanges.join(" and ")}.`);
+  } else {
+    console.log("Opening-text metadata inference kept the detected title and author.");
+  }
+
+  return enrichedBook;
+}
+
 export async function extractSkillFromBook(options: ExtractSkillOptions): Promise<GeneratedSkill> {
   warnIfCredentialsAreMissing(options.provider);
 
   const model = resolveModel(options.provider, options.modelId);
   const outputRoot = resolve(options.outputRoot);
-  const book = await loadBook(options.inputPath, {
+  let book = await loadBook(options.inputPath, {
     titleOverride: options.titleOverride,
     authorOverride: options.authorOverride,
+    logger: (message) => console.log(message),
   });
+  book = await maybeInferBookMetadata(book, options, model);
+  const allChunks = chunkText(book.text, options.chunkSize, options.overlap);
+  const chunks =
+    options.maxChunks && options.maxChunks > 0 ? allChunks.slice(0, options.maxChunks) : allChunks;
+
+  console.log(
+    formatBookLoadSummary(book, {
+      totalChunks: allChunks.length,
+      processedChunks: chunks.length,
+      chunkSize: options.chunkSize,
+      overlap: options.overlap,
+    }),
+  );
+
   const existingSkills = await loadExistingSkills(outputRoot);
 
   if (existingSkills.length > 0) {
     console.log(`Loaded ${existingSkills.length} existing skill(s) for overlap checks.`);
   }
-
-  const allChunks = chunkText(book.text, options.chunkSize, options.overlap);
-  const chunks =
-    options.maxChunks && options.maxChunks > 0 ? allChunks.slice(0, options.maxChunks) : allChunks;
 
   if (chunks.length === 0) {
     throw new Error("No chunks were produced from the extracted book text.");
@@ -78,13 +139,44 @@ export async function extractSkillFromBook(options: ExtractSkillOptions): Promis
     chunkAnalyses.push(analysis);
   }
 
-  console.log("Synthesizing final skill...");
-  const blueprint = await synthesizeSkillWithAgent({
+  console.log("Synthesizing candidate skill family...");
+  const candidateBlueprint = await synthesizeSkillCandidateWithAgent({
     model,
     thinkingLevel: options.thinkingLevel,
     book,
     chunkAnalyses,
-    existingSkills,
+  });
+  const overlapReview =
+    existingSkills.length > 0
+      ? await (async () => {
+          console.log("Reviewing candidate skill overlap...");
+          return reviewSkillOverlapWithAgent({
+            model,
+            thinkingLevel: options.thinkingLevel,
+            book,
+            candidateBlueprint,
+            existingSkills,
+          });
+        })()
+      : {
+          summary: "No existing skills were available, so no external overlap review was needed.",
+          decisions: [candidateBlueprint, ...candidateBlueprint.subskills].map((skill) => ({
+            candidateSlug: skill.slug,
+            outcome: "keep" as const,
+            rationale: "No existing skills were available for overlap comparison.",
+          })),
+        };
+  const referencedExistingSkills = selectExistingSkillsForFinalization(overlapReview, existingSkills);
+
+  console.log("Finalizing skill family...");
+  const blueprint = await finalizeSkillWithAgent({
+    model,
+    thinkingLevel: options.thinkingLevel,
+    book,
+    chunkAnalyses,
+    candidateBlueprint,
+    overlapReview,
+    referencedExistingSkills,
   });
   const reusedSkillSlugs = [...new Set([blueprint.slug, ...blueprint.subskills.map((subskill) => subskill.slug)])].filter(
     (slug) => existingSkills.some((skill) => skill.slug === slug),

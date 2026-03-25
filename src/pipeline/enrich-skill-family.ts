@@ -113,6 +113,40 @@ function replaceSourceSection(skillBody: string, sourceSection: string): string 
   return appendSection(withoutSourceSection, sourceSection);
 }
 
+function isInlineSourceLine(line: string): boolean {
+  const normalized = line.replace(/^[*_`\s]+|[*_`\s]+$/g, "").trim();
+  return /^source\s*:/i.test(normalized) || /^extract(?:ed|ion)\s+from\b/i.test(normalized);
+}
+
+function stripLeadingInlineSourcePreamble(skillBody: string): string {
+  const lines = skillBody.replace(/\r\n/g, "\n").split("\n");
+  let cursor = 0;
+
+  while (cursor < lines.length && !lines[cursor]?.trim()) {
+    cursor += 1;
+  }
+
+  if (cursor < lines.length && /^#\s+/.test(lines[cursor] ?? "")) {
+    cursor += 1;
+  }
+
+  while (cursor < lines.length && !lines[cursor]?.trim()) {
+    cursor += 1;
+  }
+
+  if (cursor >= lines.length || !isInlineSourceLine(lines[cursor] ?? "")) {
+    return skillBody.trim();
+  }
+
+  lines.splice(cursor, 1);
+
+  while (cursor < lines.length && !lines[cursor]?.trim()) {
+    lines.splice(cursor, 1);
+  }
+
+  return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
 function buildRelatedSkillsSection(currentSkill: SkillFileBlueprint, allSkills: SkillFileBlueprint[]): string {
   const relatedSkills = allSkills.filter((skill) => skill.slug !== currentSkill.slug);
 
@@ -134,7 +168,7 @@ function enrichSkillBody(
   allSkills: SkillFileBlueprint[],
   existingSkill?: ExistingSkill,
 ): string {
-  let skillBody = currentSkill.skillBody.trim();
+  let skillBody = stripLeadingInlineSourcePreamble(currentSkill.skillBody);
 
   if (!RELATED_SECTION_RE.test(skillBody)) {
     const relatedSkillsSection = buildRelatedSkillsSection(currentSkill, allSkills);
