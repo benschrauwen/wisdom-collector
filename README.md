@@ -223,6 +223,38 @@ Extracted skills:
 - [Beachhead Market Launch](skills/beachhead-market-launch/SKILL.md)
 <!-- /extracted-book:crossing-the-chasm-marketing-and-selling-high-tech-products-to-mainstream-customers-geoffrey-a-moore -->
 
+<!-- extracted-book:leading-change-john-p-kotter -->
+### Leading Change
+Author: John P. Kotter
+
+Extracted skills:
+- [Lead organizational change](skills/lead-organizational-change/SKILL.md)
+<!-- /extracted-book:leading-change-john-p-kotter -->
+
+<!-- extracted-book:an-elegant-puzzle-systems-of-engineering-management-will-larson -->
+### An Elegant Puzzle: Systems of Engineering Management
+Author: Will Larson
+
+Extracted skills:
+- [Engineering Org System Design](skills/engineering-org-system-design/SKILL.md)
+<!-- /extracted-book:an-elegant-puzzle-systems-of-engineering-management-will-larson -->
+
+<!-- extracted-book:how-to-win-friends-and-influence-people-dale-carnegie -->
+### How to Win Friends and Influence People
+Author: Dale Carnegie
+
+Extracted skills:
+- [People-Centered Influence](skills/people-centered-influence/SKILL.md)
+<!-- /extracted-book:how-to-win-friends-and-influence-people-dale-carnegie -->
+
+<!-- extracted-book:designing-data-intensive-applications-the-big-ideas-behind-reliable-scalable-and-maintainable-systems-martin-kleppmann -->
+### Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems
+Author: Martin Kleppmann
+
+Extracted skills:
+- [Data System Tradeoff Design](skills/data-system-tradeoff-design/SKILL.md)
+<!-- /extracted-book:designing-data-intensive-applications-the-big-ideas-behind-reliable-scalable-and-maintainable-systems-martin-kleppmann -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -248,6 +280,10 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
+
+
+
 
 
 
