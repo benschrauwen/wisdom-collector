@@ -1,7 +1,7 @@
 ---
 name: first-principles-startup-strategy
 description: >-
-  Evaluate or shape a startup around a nonconsensus insight, a small market wedge, a concrete plan, and a durable path to monopoly-like value.
+  Evaluate or shape a startup around a nonconsensus insight, a small market wedge, measurable leverage, and a durable path to monopoly-like value.
 ---
 
 # First-Principles Startup Strategy
@@ -9,6 +9,7 @@ description: >-
 Use this skill when deciding what to build, how to enter a market, how to sell it, or whether an opportunity is real rather than merely ambitious.
 
 ## Operating thesis
+
 Build from first principles, not imitation. The goal is to create something new and durable, not to compete head-on in a crowded market.
 
 ## Core moves
@@ -117,14 +118,50 @@ Operational rules:
 - Use equity to align incentives, but do not pretend fairness can be made perfect.
 - Ask why the 20th employee should join; generic answers are weak recruiting.
 
-## Useful prompts
-Use these questions in interviews and strategy sessions:
-- What important truth do very few people agree with you on?
-- What valuable company is nobody building?
-- What is the secret here?
-- What small market can we dominate first?
-- What channel will actually deliver customers at a profit?
-- What stops this from becoming a durable business?
+## Measurable leverage and startup economics
+A great startup is a place where **measurement** and **leverage** line up.
+
+- **Measurement** means extra contribution can be seen in the results.
+- **Leverage** means a small number of decisions can affect a lot of value.
+- A role with no downside risk usually has little leverage.
+- A small, selective team can outperform a big company because individual results are visible instead of averaged away.
+- Technology creates leverage because one technique can scale across many users.
+- If you want to make money by your own efforts, prefer situations where results are both measurable and high-leverage.
+
+Practical rules:
+- Use users as the most important near-proxy for value created.
+- Get version 1 out fast; before users exist, optimization is guesswork.
+- Let real users, not opinions, tell you what to improve.
+- Smaller teams tend to work better when the product is live and changing quickly.
+
+## Acquisition timing
+Selling early can be rational when the upside is volatile or when the company has already learned enough.
+
+Acquirers usually care about:
+- user count
+- profitability
+- growth
+- fear of losing you to competitors
+- the future price they may have to pay later
+
+Rule of thumb:
+- Build something users want first; acquisition is usually a consequence of that, not a substitute for it.
+
+## Decision rules
+- If you can’t measure it, don’t expect money to follow effort.
+- If you can measure it but the work has little reach, there may be no real upside.
+- If a business depends on broad market excitement but not on users, it is weak.
+- If you have users and profit, you have evidence; without them, you mostly have beliefs.
+- If competitors can copy the idea easily, the moat is weak.
+- If the harder path creates real defensibility, choose it.
+
+## Anti-patterns
+- **Big-company averaging**: top performers getting flattened by the average.
+- **Proxy success**: chasing prestige, press, or investor approval instead of user value.
+- **Comfort-first selection**: choosing the easiest work when the harder work would create defensibility.
+- **Relying on policy instead of product**: depending on patents, rules, or permission rather than on something people actually use.
 
 ## Source note
-Extracted from *Zero to One: Notes on Startups, or How to Build the Future* by Peter Thiel.
+Synthesized from:
+- *Zero to One: Notes on Startups, or How to Build the Future* by Peter Thiel.
+- *Hackers & Painters: Big Ideas from the Computer Age* by Paul Graham.

@@ -255,6 +255,23 @@ Extracted skills:
 - [Data System Tradeoff Design](skills/data-system-tradeoff-design/SKILL.md)
 <!-- /extracted-book:designing-data-intensive-applications-the-big-ideas-behind-reliable-scalable-and-maintainable-systems-martin-kleppmann -->
 
+<!-- extracted-book:getting-things-done-the-art-of-stress-free-productivity-david-allen -->
+### Getting Things Done: The Art of Stress-Free Productivity
+Author: David Allen
+
+Extracted skills:
+- [Trusted Next-Action Workflow](skills/trusted-next-action-workflow/SKILL.md)
+<!-- /extracted-book:getting-things-done-the-art-of-stress-free-productivity-david-allen -->
+
+<!-- extracted-book:hackers-painters-big-ideas-from-the-computer-age-paul-graham -->
+### Hackers & Painters: Big Ideas from the Computer Age
+Author: Paul Graham
+
+Extracted skills:
+- [First-Principles Startup Strategy](skills/first-principles-startup-strategy/SKILL.md)
+- [Hacker-Friendly Software Design](skills/hacker-friendly-software-design/SKILL.md)
+<!-- /extracted-book:hackers-painters-big-ideas-from-the-computer-age-paul-graham -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -280,6 +297,8 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
+
 
 
 
