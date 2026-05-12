@@ -272,6 +272,15 @@ Extracted skills:
 - [Hacker-Friendly Software Design](skills/hacker-friendly-software-design/SKILL.md)
 <!-- /extracted-book:hackers-painters-big-ideas-from-the-computer-age-paul-graham -->
 
+<!-- extracted-book:the-new-rational-manager-charles-h-kepner-benjamin-b-tregoe -->
+### The New Rational Manager
+Author: Charles H. Kepner, Benjamin B. Tregoe
+
+Extracted skills:
+- [Structured root cause analysis](skills/structured-root-cause-analysis/SKILL.md)
+- [Rational process selection](skills/rational-process-selection/SKILL.md)
+<!-- /extracted-book:the-new-rational-manager-charles-h-kepner-benjamin-b-tregoe -->
+
 <!-- extracted-books:end -->
 
 ## Project Structure
@@ -297,6 +306,7 @@ skills/         # The community skill collection
 ## License
 
 MIT
+
 
 
 
